@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destination Details - Bali</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* Header Styles */
+        .destination-header {
+            height: 70vh;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            color: white;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .header-content {
+            padding: 2rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            width: 100%;
+        }
+
+        .destination-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Navigation Tabs */
+        .navigation-tabs {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 1rem;
+            display: flex;
+            gap: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            background: #1a2a6c;
+            color: white;
+        }
+
+        /* Content Sections */
+        .tab-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Hotel Section */
+        .hotel-filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .hotels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .hotel-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .hotel-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .hotel-info {
+            padding: 1.5rem;
+        }
+
+        .hotel-stars {
+            color: #ffd700;
+            margin: 0.5rem 0;
+        }
+
+        .hotel-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1a2a6c;
+            margin-top: 1rem;
+        }
+
+        /* Food Section */
+        .cuisine-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            position: relative;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .category-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+        }
+
+        /* Activities Section */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .activity-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .activity-content {
+            padding: 1.5rem;
+        }
+
+        .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem 0;
+            color: #666;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            background: #1a2a6c;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover {
+            background: #2a3a7c;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .destination-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hotel-filters {
+                flex-direction: column;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="destination-header" style="background-image: url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1920')">
+        <div class="header-content">
+            <h1>Bali, Indonesia</h1>
+            <div class="destination-meta">
+                <span><i class="fas fa-calendar"></i> Best Time: Apr-Oct</span>
+                <span><i class="fas fa-dollar-sign"></i> From $1,500</span>
+                <span><i class="fas fa-clock"></i> Ideal Duration: 7 days</span>
+                <span><i class="fas fa-plane"></i> Direct Flights Available</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation-tabs">
+        <button class="tab-btn active" data-tab="hotels">Hotels</button>
+        <button class="tab-btn" data-tab="food">Local Cuisine</button>
+        <button class="tab-btn" data-tab="activities">Activities</button>
+        <button class="tab-btn" data-tab="reviews">Reviews</button>
+    </div>
+
+    <div class="tab-content">
+        <!-- Hotels Tab -->
+        <div class="tab-panel active" id="hotels">
+            <div class="hotel-filters">
+                <div class="filter-group">
+                    <label>Star Rating</label>
+                    <select id="starFilter">
+                        <option value="">All Ratings</option>
+                        <option value="5">5 Star Luxury</option>
+                        <option value="4">4 Star Premium</option>
+                        <option value="3">3 Star Comfort</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Price Range</label>
+                    <select id="priceFilter">
+                        <option value="">All Prices</option>
+                        <option value="budget">Budget ($0-100)</option>
+                        <option value="mid">Mid-Range ($100-300)</option>
+                        <option value="luxury">Luxury ($300+)</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Location</label>
+                    <select id="locationFilter">
+                        <option value="">All Locations</option>
+                        <option value="beach">Beachfront</option>
+                        <option value="city">City Center</option>
+                        <option value="hills">Hills & Nature</option>
+                    </select>
+                </div>
+            </div>
+            <div class="hotels-grid" id="hotelsGrid"></div>
+        </div>
+
+        <!-- Food Tab -->
+        <div class="tab-panel" id="food">
+            <div class="cuisine-categories">
+                <div class="category-card" data-category="traditional">
+                    <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=800" alt="Traditional Cuisine">
+                    <div class="category-content">
+                        <h3>Traditional Balinese</h3>
+                        <p>Authentic local delicacies</p>
+                    </div>
+                </div>
+                <div class="category-card" data-category="seafood">
+                    <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=800" alt="Seafood">
+                    <div class="category-content">
+                        <h3>Fresh Seafood</h3>
+                        <p>Ocean-to-table dining</p>
+                    </div>
+                </div>
+                <div class="category-card" data-category="modern">
+                    <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=800" alt="Modern Fusion">
+                    <div class="category-content">
+                        <h3>Modern Fusion</h3>
+                        <p>Contemporary interpretations</p>
+                    </div>
+                </div>
+            </div>
+            <div id="restaurantsGrid" class="restaurants-grid"></div>
+        </div>
+
+        <!-- Activities Tab -->
+        <div class="tab-panel" id="activities">
+            <div class="activities-grid" id="activitiesGrid"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init();
+
+        // Sample Data
+        const hotels = [
+            {
+                id: 1,
+                name: "Luxury Beach Resort & Spa",
+                stars: 5,
+                price: 500,
+                location: "beach",
+                image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800",
+                description: "Exclusive beachfront resort with private pools",
+                priceCategory: "luxury"
+            },
+            {
+                id: 2,
+                name: "City Center Hotel",
+                stars: 4,
+                price: 200,
+                location: "city",
+                image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800",
+                description: "Modern hotel in the heart of the city",
+                priceCategory: "mid"
+            },
+            {
+                id: 3,
+                name: "Mountain View Resort",
+                stars: 3,
+                price: 80,
+                location: "hills",
+                image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800",
+                description: "Peaceful retreat in the hills",
+                priceCategory: "budget"
+            }
+        ];
+
+        const activities = [
+            {
+                name: "Temple Tour",
+                category: "cultural",
+                duration: "4 hours",
+                price: 50,
+                image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800",
+                description: "Visit ancient temples and learn about local culture"
+            },
+            // Add more activities...
+        ];
+
+        // Tab Switching
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+                
+                button.classList.add('active');
+                document.getElementById(button.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Hotel Filtering
+        function filterHotels() {
+            const starFilter = document.getElementById('starFilter').value;
+            const priceFilter = document.getElementById('priceFilter').value;
+            const locationFilter = document.getElementById('locationFilter').value;
+
+            const filteredHotels = hotels.filter(hotel => {
+                const matchesStar = !starFilter || hotel.stars === parseInt(starFilter);
+                const matchesPrice = !priceFilter || hotel.priceCategory === priceFilter;
+                const matchesLocation = !locationFilter || hotel.location === locationFilter;
+                return matchesStar && matchesPrice && matchesLocation;
+            });
+
+            displayHotels(filteredHotels);
+        }
+
+        function displayHotels(hotelsToShow) {
+            const grid = document.getElementById('hotelsGrid');
+            grid.innerHTML = '';
+
+            hotelsToShow.forEach(hotel => {
+                const card = document.createElement('div');
+                card.className = 'hotel-card';
+                card.setAttribute('data-aos', 'fade-up');
+                card.innerHTML = `
+                    <img src="${hotel.image}" alt="${hotel.name}" class="hotel-image">
+                    <div class="hotel-info">
+                        <h3>${hotel.name}</h3>
+                        <div class="hotel-stars">${'⭐'.repeat(hotel.stars)}</div>
+                        <p>${hotel.description}</p>
+                        <div class="hotel-price">From $${hotel.price} per night</div>
+                        <button class="book-btn">Book Now</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            displayHotels(hotels);
+            
+            // Add filter event listeners
+            document.getElementById('starFilter').addEventListener('change', filterHotels);
+            document.getElementById('priceFilter').addEventListener('change', filterHotels);
+            document.getElementById('locationFilter').addEventListener('change', filterHotels);
+        });
+
+        function createDestinationCard(destination) {
+            return `
+                <div class="destination-card" data-aos="fade-up" onclick="window.location.href='./select_destination.html?id=${destination.id}'">
+                <!-- ... rest of your card code ... -->
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

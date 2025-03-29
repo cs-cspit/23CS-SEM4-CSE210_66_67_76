@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - TravelVista</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --accent: #E74C3C;
+            --background: #F8F9FA;
+            --white: #FFFFFF;
+            --gray: #6C757D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #2C3E50, #3498DB);
+            padding: 80px 20px 20px;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .profile-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: var(--primary);
+            padding: 40px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 4px solid white;
+        }
+
+        .profile-info h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .profile-stats {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            background: white;
+        }
+
+        .stat-card {
+            background: var(--background);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            color: var(--secondary);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .profile-content {
+            padding: 30px;
+            background: white;
+        }
+
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--background);
+        }
+
+        .bookings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .booking-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .booking-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .booking-image {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .booking-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .booking-destination {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .booking-date, .booking-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .preferences-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .preference-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .preference-item i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+
+            .profile-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="/frontend/homepage.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        Back to Home
+    </a>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-info">
+                <h1 id="userName">Loading...</h1>
+                <p id="userEmail">Loading...</p>
+            </div>
+        </div>
+
+        <div class="profile-stats">
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Trips Booked</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Countries Visited</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">120</div>
+                <div class="stat-label">Travel Points</div>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <h2 class="section-title">My Bookings</h2>
+            <div id="bookingsContainer" class="bookings-grid">
+                <!-- Bookings will be loaded dynamically -->
+            </div>
+
+            <h2 class="section-title">Travel Preferences</h2>
+            <div class="preferences-container">
+                <div class="preference-item">
+                    <i class="fas fa-plane"></i>
+                    <span>Preferred Airlines: Emirates</span>
+                </div>
+                <div class="preference-item">
+                    <i class="fas fa-hotel"></i>
+                    <span>Accommodation: Luxury Hotels</span>
+                </div>
+                <div class="preference-item">
+                    <i class="fas fa-utensils"></i>
+                    <span>Dietary: Vegetarian</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add this function to check auth state
+        function checkAuthState() {
+            const token = localStorage.getItem('token');
+            const userData = localStorage.getItem('userData');
+            return { isAuthenticated: !!token && !!userData, token, userData };
+        }
+
+        function updateAuthButtons() {
+            const authButtons = document.getElementById('authButtons');
+            const { isAuthenticated } = checkAuthState();
+            
+            if (isAuthenticated) {
+                authButtons.innerHTML = `
+                    <a href="/frontend/my-profile.html" class="profile-btn">
+                        <i class="fas fa-user"></i> Profile
+                    </a>
+                    <button onclick="logout()" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                `;
+            } else {
+                authButtons.innerHTML = `
+                    <a href="/frontend/login.html" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="/frontend/signup.html" class="signup-btn">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </a>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userData');
+            window.location.href = '/frontend/homepage.html';
+        }
+
+        // Call this when the page loads
+        document.addEventListener('DOMContentLoaded', updateAuthButtons);
+
+        // Fetch user profile data
+        async function fetchUserProfile() {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    window.location.href = 'http://localhost:5502/frontend/login.html';
+                    return;
+                }
+
+                const response = await fetch('http://localhost:5502/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'x-auth-token': token
+                    }
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    // Store user data
+                    localStorage.setItem('userData', JSON.stringify({
+                        ...userData,
+                        isLoggedIn: true,
+                        token: token
+                    }));
+                    
+                    // Update UI
+                    document.getElementById('userName').textContent = userData.fullName;
+                    document.getElementById('userEmail').textContent = userData.email;
+                } else {
+                    console.error('Failed to fetch profile');
+                    window.location.href = 'http://localhost:5502/frontend/login.html';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to load profile');
+                window.location.href = 'http://localhost:5502/frontend/login.html';
+            }
+        }
+
+        // Load real bookings data
+        async function loadBookings() {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) return;
+
+                const response = await fetch('http://localhost:5502/api/booking/user-bookings', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'x-auth-token': token
+                    },
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    const bookings = await response.json();
+                    const bookingsContainer = document.getElementById('bookingsContainer');
+                    bookingsContainer.innerHTML = '';
+
+                    if (bookings.length === 0) {
+                        bookingsContainer.innerHTML = '<p>No bookings found</p>';
+                        return;
+                    }
+
+                    bookings.forEach(booking => {
+                        const bookingCard = `
+                            <div class="booking-card">
+                                <img src="${booking.destination.image}" alt="${booking.destination.name}" class="booking-image">
+                                <div class="booking-info">
+                                    <h3>${booking.destination.name}</h3>
+                                    <div class="booking-details">
+                                        <p>Check-in: ${new Date(booking.bookingDetails.checkIn).toLocaleDateString()}</p>
+                                        <p>Check-out: ${new Date(booking.bookingDetails.checkOut).toLocaleDateString()}</p>
+                                        <p>Guests: ${booking.bookingDetails.guests.adults} Adults, ${booking.bookingDetails.guests.children} Children</p>
+                                        <p>Total Price: $${booking.bookingDetails.totalPrice}</p>
+                                        <p class="booking-status ${booking.status}">${booking.status}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        bookingsContainer.innerHTML += bookingCard;
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading bookings:', error);
+                alert('Failed to load bookings');
+            }
+        }
+
+        // Replace your existing fetchMembershipDetails function with this one
+        function fetchMembershipDetails() {
+            // Get membership data from localStorage
+            const membershipDataString = localStorage.getItem('membershipData');
+            
+            if (membershipDataString) {
+                try {
+                    const membershipData = JSON.parse(membershipDataString);
+                    updateMembershipUI(membershipData);
+                } catch (error) {
+                    console.error('Error parsing membership data:', error);
+                    showNoMembershipUI();
+                }
+            } else {
+                // No membership data found
+                showNoMembershipUI();
+            }
+        }
+        
+        function showNoMembershipUI() {
+            document.getElementById('membershipCard').innerHTML = `
+                <div class="no-membership">
+                    <p>You don't have an active membership plan.</p>
+                    <p>Get a membership to enjoy exclusive benefits and discounts!</p>
+                    <a href="membership.html" class="get-membership-btn">Get Membership</a>
+                </div>
+            `;
+        }
+        
+        function updateMembershipUI(membershipData) {
+            const membershipCard = document.getElementById('membershipCard');
+            
+            if (membershipData.membership && membershipData.membership !== 'none') {
+                // User has a membership
+                const membershipType = membershipData.membership;
+                const purchaseDate = new Date(membershipData.purchaseDate).toLocaleDateString();
+                const expiryDate = new Date(membershipData.expiryDate).toLocaleDateString();
+                
+                // Get benefits based on membership type
+                const benefits = getMembershipBenefits(membershipType);
+                
+                membershipCard.innerHTML = `
+                    <div class="membership-badge badge-${membershipType}">
+                        ${membershipType.charAt(0).toUpperCase() + membershipType.slice(1)} Member
+                    </div>
+                    
+                    <div class="membership-details">
+                        <div class="membership-detail">
+                            <div class="detail-label">Status</div>
+                            <div class="detail-value">Active</div>
+                        </div>
+                        <div class="membership-detail">
+                            <div class="detail-label">Purchase Date</div>
+                            <div class="detail-value">${purchaseDate}</div>
+                        </div>
+                        <div class="membership-detail">
+                            <div class="detail-label">Expiry Date</div>
+                            <div class="detail-value">${expiryDate}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="membership-benefits">
+                        <div class="benefits-title">Your Benefits:</div>
+                        <ul class="benefits-list">
+                            ${benefits.map(benefit => `<li><i class="fas fa-check"></i> ${benefit}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            } else {
+                // User doesn't have a membership
+                membershipCard.innerHTML = `
+                    <div class="no-membership">
+                        <p>You don't have an active membership plan.</p>
+                        <p>Get a membership to enjoy exclusive benefits and discounts!</p>
+                        <a href="membership.html" class="get-membership-btn">Get Membership</a>
+                    </div>
+                `;
+            }
+        }
+        
+        function getMembershipBenefits(membershipType) {
+            // Return benefits based on membership type
+            const basicBenefits = [
+                "5% discount on all tours",
+                "Priority customer support",
+                "Monthly newsletter",
+                "Access to member-only deals"
+            ];
+            
+            const premiumBenefits = [
+                ...basicBenefits,
+                "10% discount on all tours (instead of 5%)",
+                "Free airport transfers"
+            ];
+            
+            const platinumBenefits = [
+                ...premiumBenefits,
+                "15% discount on all tours (instead of 10%)",
+                "Exclusive travel guides",
+                "Dedicated travel consultant"
+            ];
+            
+            switch (membershipType) {
+                case 'basic':
+                    return basicBenefits;
+                case 'premium':
+                    return premiumBenefits;
+                case 'platinum':
+                    return platinumBenefits;
+                default:
+                    return [];
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            const { isAuthenticated } = checkAuthState();
+            if (!isAuthenticated) {
+                window.location.href = '/frontend/login.html';
+                return;
+            }
+            
+            // Rest of your profile page initialization code
+            fetchUserProfile();
+            loadBookings();
+            fetchMembershipDetails();
+        });
+
+        function displayBookings(bookings) {
+            const bookingsContainer = document.getElementById('bookingsContainer');
+            if (!bookings || bookings.length === 0) {
+                bookingsContainer.innerHTML = '<p class="no-bookings">No bookings found</p>';
+                return;
+            }
+
+            bookingsContainer.innerHTML = bookings.map(booking => `
+                <div class="booking-card">
+                    <img src="${booking.image || 'https://via.placeholder.com/300x150'}" alt="${booking.destination}" class="booking-image">
+                    <div class="booking-details">
+                        <div class="booking-destination">${booking.destination}</div>
+                        <div class="booking-date">
+                            <i class="far fa-calendar"></i>
+                            ${new Date(booking.startDate).toLocaleDateString()} - ${new Date(booking.endDate).toLocaleDateString()}
+                        </div>
+                        <div class="booking-status">
+                            <i class="fas fa-info-circle"></i>
+                            ${booking.status}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

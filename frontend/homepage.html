@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelVista - Ultimate Travel Experience</title>
+    
+    <!-- External CSS Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    
+    <style>
+        /* Root Variables */
+        :root {
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --accent: #E74C3C;
+            --success: #2ECC71;
+            --warning: #F1C40F;
+            --background: #F8F9FA;
+            --white: #FFFFFF;
+            --gray: #6C757D;
+            --dark: #1a1a1a;
+        }
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            overflow-x: hidden;
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--background);
+            border-top: 5px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Enhanced Navigation Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background-color: #fff;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+        
+        .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #2a3990;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo-img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-item {
+            position: relative;
+            margin: 0 5px;
+        }
+        
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item a i {
+            margin-right: 6px;
+        }
+        
+        .nav-item a:hover, 
+        .nav-item a.active {
+            color: #2a3990;
+        }
+        
+        .dropdown-toggle .fa-chevron-down {
+            font-size: 0.8rem;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+        
+        .dropdown:hover .fa-chevron-down {
+            transform: rotate(180deg);
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            padding: 10px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu li {
+            list-style: none;
+        }
+        
+        .dropdown-menu li a {
+            display: block;
+            padding: 10px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-menu li a:hover {
+            background-color: #f5f7ff;
+            color: #2a3990;
+            padding-left: 25px;
+        }
+        
+        .nav-auth {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
+        
+        .login-btn, .register-btn {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn {
+            color: #2a3990;
+            margin-right: 10px;
+            border: 1px solid #2a3990;
+        }
+        
+        .login-btn:hover {
+            background-color: #f0f3ff;
+        }
+        
+        .register-btn {
+            background-color: #2a3990;
+            color: white;
+        }
+        
+        .register-btn:hover {
+            background-color: #1a2770;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: #2a3990;
+            transition: all 0.3s ease;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .nav-wrapper {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                align-items: flex-start;
+                background-color: white;
+                width: 100%;
+                height: calc(100vh - 80px);
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+                overflow-y: auto;
+            }
+            
+            .nav-wrapper.active {
+                left: 0;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .nav-item {
+                margin: 5px 0;
+                width: 100%;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                max-height: 0;
+                overflow: hidden;
+                padding: 0;
+                transition: max-height 0.3s ease;
+            }
+            
+            .dropdown.active .dropdown-menu {
+                max-height: 500px;
+                padding: 10px 0;
+            }
+            
+            .dropdown-toggle .fa-chevron-down {
+                transition: transform 0.3s ease;
+            }
+            
+            .dropdown.active .fa-chevron-down {
+                transform: rotate(180deg);
+            }
+            
+            .nav-auth {
+                margin: 20px 0 0 0;
+                width: 100%;
+                flex-direction: column;
+            }
+            
+            .login-btn, .register-btn {
+                width: 100%;
+                justify-content: center;
+                margin: 5px 0;
+                padding: 12px;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-slider {
+            height: 100%;
+        }
+
+        .hero-slide {
+            position: relative;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                rgba(0,0,0,0.3),
+                rgba(0,0,0,0.6)
+            );
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            color: var(--white);
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        /* Search Bar */
+        .search-container {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .search-input {
+            position: relative;
+        }
+
+        .search-input label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .search-input input,
+        .search-input select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            grid-column: 1/-1;
+        }
+
+        .search-btn:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Featured Destinations */
+        .featured-destinations {
+            padding: 5rem 10%;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .destination-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .destination-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .destination-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .destination-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(
+                transparent,
+                rgba(0,0,0,0.8)
+            );
+            color: var(--white);
+        }
+
+        .destination-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .destination-info {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Popular Tours */
+        .popular-tours {
+            padding: 5rem 10%;
+            background: var(--background);
+        }
+
+        .tour-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .tour-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .tour-content {
+            padding: 1.5rem;
+        }
+
+        .tour-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .tour-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
+
+        .tour-price {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover {
+            background: var(--primary);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .destination-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-left: 2rem;
+        }
+
+        .auth-buttons .login-btn {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--secondary);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .auth-buttons .signup-btn {
+            padding: 0.5rem 1.5rem;
+            background: var(--secondary);
+            color: var(--white);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .auth-buttons .login-btn:hover {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .auth-buttons .signup-btn:hover {
+            background: var(--primary);
+        }
+
+        /* Weather section styles */
+        .weather-section {
+            padding: 80px 0;
+            background-color: #f5f9ff;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-header h2 {
+            color: #2a3990;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .section-header p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .weather-widget {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .weather-form {
+            margin-bottom: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .submit-btn {
+            background-color: #2a3990;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background-color: #1a2770;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        
+        .loading i {
+            font-size: 2rem;
+            color: #2a3990;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .weather-results {
+            display: none;
+        }
+        
+        .destination-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .destination-info h2 {
+            color: #2a3990;
+            margin-bottom: 5px;
+        }
+        
+        .forecast-cards {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 10px 0;
+        }
+        
+        .forecast-card {
+            min-width: 180px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .forecast-date {
+            background-color: #2a3990;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .forecast-icon {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 3rem;
+        }
+        
+        .forecast-details {
+            padding: 15px;
+        }
+        
+        .forecast-temp {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .forecast-condition {
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .forecast-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .forecast-label {
+            color: #666;
+        }
+        
+        .forecast-value {
+            font-weight: 500;
+        }
+        
+        .weather-cta {
+            text-align: center;
+        }
+        
+        .weather-cta p {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background-color: #2a3990;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .cta-btn:hover {
+            background-color: #1a2770;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* User dropdown styles */
+        .user-dropdown {
+            position: relative;
+        }
+        
+        .user-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background-color: #f0f7ff;
+            border-radius: 20px;
+            color: #2a3990;
+            transition: background-color 0.3s;
+        }
+        
+        .user-dropdown-toggle:hover {
+            background-color: #e0eeff;
+        }
+        
+        .user-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 200px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 10px 0;
+            margin-top: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .user-dropdown:hover .user-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .user-dropdown-menu li {
+            display: block;
+            margin: 0;
+        }
+        
+        .user-dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            color: #333;
+            transition: background-color 0.3s;
+        }
+        
+        .user-dropdown-menu a:hover {
+            background-color: #f5f9ff;
+            color: #2a3990;
+        }
+        
+        .user-dropdown-menu i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Auth buttons styles */
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .login-btn, .register-btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn {
+            background-color: transparent;
+            border: 1px solid #2a3990;
+            color: #2a3990;
+        }
+        
+        .login-btn:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .register-btn {
+            background-color: #2a3990;
+            color: white;
+        }
+        
+        .register-btn:hover {
+            background-color: #1a2770;
+        }
+        
+        /* Responsive styles for the user menu */
+        @media (max-width: 768px) {
+            .user-dropdown-toggle {
+                padding: 10px;
+            }
+            
+            .user-dropdown-toggle span {
+                display: none;
+            }
+            
+            .user-dropdown-menu {
+                width: 180px;
+                right: -10px;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Enhanced Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <!-- <img src="images/logo.png" alt="TravelEase Logo" class="logo-img"> -->
+                    <span>TravelEase</span>
+                </a>
+            </div>
+            
+            <div class="nav-wrapper">
+                <ul class="nav-links">
+                    <li class="nav-item"><a href="index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle">
+                            <i class="fas fa-globe-americas"></i> Explore <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="destination_page.html">Popular Destinations</a></li>
+                            <li><a href="tours_page.html">Guided Tours</a></li>
+                            <li><a href="activities.html">Activities</a></li>
+                            <li><a href="seasonal.html">Seasonal Offers</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li class="nav-item"><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle">
+                            <i class="fas fa-concierge-bell"></i> Services <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="feedback.html">Feedback</a></li>
+                            <li><a href="membership.html">Membership</a></li>
+                            <li><a href="weather-forecast.html">Weather Forecast</a></li>
+                            <li><a href="travel-tips.html">Travel Tips</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <div class="nav-auth">
+                    <a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="signup.html" class="register-btn"><i class="fas fa-user-plus"></i> Register</a>
+                </div>
+            </div>
+            
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="swiper hero-slider">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide hero-slide" style="background-image: url('https://wallpapers.com/images/hd/hd-mountain-shot-of-the-himalayas-uera296gn6am05vv.jpg')">
+                    <div class="hero-overlay">
+                        <div class="hero-content">
+                            <h1 class="hero-title">Explore the World</h1>
+                            <p class="hero-subtitle">Life is a journey best lived by exploring — places, ideas, and the depths of our own hearts.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide hero-slide" style="background-image: url('https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+                    <div class="hero-overlay">
+                        <div class="hero-content">
+                            <h1 class="hero-title">Travel far and wide</h1>
+                            <p class="hero-subtitle">collecting memories, stories, and the beauty of the unknown.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide hero-slide" style="background-image: url('https://himachalstory.com/wp-content/uploads/2018/07/Mcleodganj-Dharmshala-scaled.jpg')">
+                    <div class="hero-overlay">
+                        <div class="hero-content">
+                            <h1 class="hero-title">Adventure is calling</h1>
+                            <p class="hero-subtitle">across oceans, mountains, and the horizons of your imagination.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide hero-slide" style="background-image: url('https://c4.wallpaperflare.com/wallpaper/857/613/229/resort-sea-4k-tourism-wallpaper-preview.jpg')">
+                    <div class="hero-overlay">
+                        <div class="hero-content">
+                            <h1 class="hero-title">Every path leads to discovery</h1>
+                            <p class="hero-subtitle"> of places, people, and the soul's deepest desires</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide hero-slide" style="background-image: url('https://images.unsplash.com/photo-1533587851505-d119e13fa0d7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+                    <div class="hero-overlay">
+                        <div class="hero-content">
+                            <h1 class="hero-title">The world unfolds its magic</h1>
+                            <p class="hero-subtitle">for those who dare to explore with open hearts and minds.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- More slides... -->
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <!-- Featured Destinations -->
+    <section class="featured-destinations">
+        <div class="section-title">
+            <h2>Popular Destinations</h2>
+            <p>Explore our hand-picked destinations</p>
+        </div>
+        <div class="destination-grid">
+            <!-- Destination cards will be dynamically loaded -->
+        </div>
+    </section>
+
+    <!-- Popular Tours -->
+    <section class="popular-tours">
+        <div class="section-title">
+            <h2>Popular Tours</h2>
+            <p>Best selling tour packages</p>
+        </div>
+        <div class="tour-grid">
+            <!-- Tour cards will be dynamically loaded -->
+        </div>
+    </section>
+
+    <!-- Weather Forecast Feature Section -->
+    <section class="weather-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Check Weather for Your Trip</h2>
+                <p>Plan your travel with confidence by checking the weather forecast for your destination</p>
+            </div>
+            
+            <div class="weather-widget">
+                <div class="weather-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="destination">Destination</label>
+                            <input type="text" id="destination" placeholder="Enter city name (e.g., Paris, Tokyo)">
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" id="country" placeholder="Enter country (e.g., France, Japan)">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startDate">Travel Start Date</label>
+                            <input type="date" id="startDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate">Travel End Date</label>
+                            <input type="date" id="endDate">
+                        </div>
+                    </div>
+                    <button class="submit-btn" id="getWeatherBtn">Get Weather Forecast</button>
+                </div>
+                
+                <div class="loading" id="loadingIndicator">
+                    <i class="fas fa-spinner"></i>
+                    <p>Fetching weather data...</p>
+                </div>
+                
+                <div class="error-message" id="errorMessage">
+                    <i class="fas fa-exclamation-circle"></i> 
+                    <span id="errorText">Error message will appear here</span>
+                </div>
+                
+                <div class="weather-results" id="weatherResults">
+                    <div class="destination-info" id="destinationInfo">
+                        <h2 id="locationName">Paris, France</h2>
+                        <p id="travelDates">Travel Dates: June 21, 2023 - June 25, 2023</p>
+                    </div>
+                    
+                    <div class="forecast-cards" id="forecastCards">
+                        <!-- Forecast cards will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="weather-cta">
+                <p>Need more detailed weather information?</p>
+                <a href="weather-forecast.html" class="cta-btn">Visit Full Weather Page</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    
+    <script>
+        // Remove preloader when page is loaded
+        window.addEventListener('load', () => {
+            document.querySelector('.preloader').style.display = 'none';
+        });
+
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Initialize Swiper
+        new Swiper('.hero-slider', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true
+            }
+        });
+
+        // Dynamic content loading
+        const destinations = [
+            {
+                name: "Bali",
+                image: "image/bali.jpeg",
+                rating: "4.8",
+                duration: "7 Days",
+                price: "1299"
+            },
+            {
+                name: "Paris",
+                image: "image/paris.jpg",
+                rating: "4.9",
+                duration: "6 Days",
+                price: "1499"
+            },
+            {
+                name: "Tokyo",
+                image: "image/tokyo.jpg",
+                rating: "4.9",
+                duration: "5 Days",
+                price: "1699"
+            },
+            {
+                name: "Rome",
+                image: "image/rome.jpg",
+                rating: "4.8",
+                duration: "6 Days",
+                price: "1399"
+            },
+            { id: 5, name: 'Sydney, Australia', image: 'image/Sydney.jpg', rating: 4.8, duration: '7 Days', price: 1400 },
+            { id: 6, name: 'New York, USA', image: 'image/New York.png', rating: 4.9, duration: '5 Days', price: 1600 },
+            { id: 7, name: 'London, UK', image: 'image/London.jpg', rating: 4.7, duration: '6 Days', price: 1350 },
+            { id: 8, name: 'Barcelona, Spain', image: 'image/Barcelona.jpg', rating: 4.8, duration: '5 Days', price: 1250 },
+            { id: 9, name: 'Dubai, UAE', image: 'image/Dubai.png', rating: 4.9, duration: '4 Days', price: 1550 },
+            { id: 10, name: 'Amsterdam, Netherlands', image: 'image/Amsterdam.jpg', rating: 4.6, duration: '3 Days', price: 1150 },
+            { id: 11, name: 'Bangkok, Thailand', image: 'image/Bangkok.jpg', rating: 4.7, duration: '6 Days', price: 1100 },
+            { id: 12, name: 'Istanbul, Turkey', image: 'image/Istanbul.jpg', rating: 4.8, duration: '5 Days', price: 1200 },
+            { id: 13, name: 'Kyoto, Japan', image: 'image/Kyoto.jpg', rating: 4.9, duration: '4 Days', price: 1400 },
+            { id: 14, name: 'Los Angeles, USA', image: 'image/Los Angeles.webp', rating: 4.6, duration: '3 Days', price: 1300 },
+            { id: 15, name: 'Munich, Germany', image: 'image/Munich.jpg', rating: 4.8, duration: '5 Days', price: 1250 },
+            { id: 16, name: 'Santorini, Greece', image: 'image/Santorini.jpg', rating: 4.9, duration: '7 Days', price: 1450 },
+            { id: 17, name: 'Seoul, South Korea', image: 'image/Seoul.jpg', rating: 4.7, duration: '6 Days', price: 1350 },
+            { id: 18, name: 'Singapore', image: 'image/Singapore.jpg', rating: 4.8, duration: '4 Days', price: 1150 },
+            { id: 19, name: 'Prague, Czech Republic', image: 'image/Prague.jpg', rating: 4.9, duration: '5 Days', price: 1200 },
+            { id: 20, name: 'Cape Town, South Africa', image: 'image/Cape Town.jpg', rating: 4.6, duration: '6 Days', price: 1100 },
+            { id: 21, name: 'India', image: 'image/india.webp', rating: 4.6, duration: '6 Days', price: 1100 }
+        ];
+
+        // Load destinations
+        const destinationGrid = document.querySelector('.destination-grid');
+        destinations.forEach(dest => {
+            const card = createDestinationCard(dest);
+            destinationGrid.innerHTML += card;
+        });
+
+        // Load tours
+        const tourGrid = document.querySelector('.tour-grid');
+        tours.forEach(tour => {
+            const card = `
+                <div class="tour-card" data-aos="fade-up">
+                    <img src="${tour.image}" alt="${tour.name}" class="tour-img">
+                    <div class="tour-content">
+                        <h3 class="tour-title">${tour.name}</h3>
+                        <div class="tour-info">
+                            <span><i class="fas fa-clock"></i> ${tour.duration}</span>
+                            <span><i class="fas fa-star"></i> ${tour.rating}</span>
+                        </div>
+                        <div class="tour-price">$${tour.price}</div>
+                        <button class="book-btn">Book Now</button>
+                    </div>
+                </div>
+            `;
+            tourGrid.innerHTML += card;
+        });
+
+        // Scroll animations
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Update the createDestinationCard function with the new folder paths
+        function createDestinationCard(destination) {
+            let pageUrl = '';
+            if (destination.name === "Bali") {
+                pageUrl = 'tour_pages/bali-tour.html';
+            } else if (destination.name === "Paris") {
+                pageUrl = 'tour_pages/paris-tour.html';
+            } else if (destination.name === "Tokyo") {
+                pageUrl = 'tour_pages/tokyo-tour.html';
+            } else if (destination.name === "Rome") {
+                pageUrl = 'tour_pages/rome-tour.html';
+            }
+
+            return `
+                <div class="destination-card" style="cursor: pointer;" onclick="window.location.href='${pageUrl}'" data-aos="fade-up">
+                    <img src="${destination.image}" alt="${destination.name}" class="destination-img">
+                    <div class="destination-content">
+                        <h3 class="destination-title">${destination.name}</h3>
+                        <div class="destination-info">
+                            <span><i class="fas fa-star"></i> ${destination.rating}</span>
+                            <span><i class="fas fa-clock"></i> ${destination.duration}</span>
+                            <span><i class="fas fa-dollar-sign"></i> $${destination.price}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize date inputs with today's date and a week from today
+            const today = new Date();
+            const nextWeek = new Date(today);
+            nextWeek.setDate(today.getDate() + 7);
+            
+            document.getElementById('startDate').valueAsDate = today;
+            document.getElementById('endDate').valueAsDate = nextWeek;
+            
+            // Add event listener to the Get Weather button
+            document.getElementById('getWeatherBtn').addEventListener('click', getWeatherForecast);
+        });
+
+        // Main function to get weather forecast
+        async function getWeatherForecast() {
+            // Get input values
+            const destination = document.getElementById('destination').value.trim();
+            const country = document.getElementById('country').value.trim();
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            // Validate inputs
+            if (!destination || !country || !startDate || !endDate) {
+                showError('Please fill in all fields');
+                return;
+            }
+            
+            // Validate dates
+            const startDateObj = new Date(startDate);
+            const endDateObj = new Date(endDate);
+            
+            if (endDateObj < startDateObj) {
+                showError('End date cannot be before start date');
+                return;
+            }
+            
+            // Calculate date difference (in days)
+            const dateDiff = Math.ceil((endDateObj - startDateObj) / (1000 * 60 * 60 * 24));
+            
+            // Limit forecast to 16 days (API limitation)
+            if (dateDiff > 16) {
+                showError('Weather forecast is limited to 16 days');
+                return;
+            }
+            
+            // Show loading indicator
+            document.getElementById('loadingIndicator').style.display = 'block';
+            document.getElementById('weatherResults').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            try {
+                // Step 1: Get coordinates for the destination
+                const coordinates = await getCoordinates(destination, country);
+                
+                if (!coordinates) {
+                    showError('Could not find coordinates for the specified location');
+                    document.getElementById('loadingIndicator').style.display = 'none';
+                    return;
+                }
+                
+                // Step 2: Get weather forecast using coordinates
+                const weatherData = await getWeatherData(coordinates.latitude, coordinates.longitude, startDate, endDate);
+                
+                if (!weatherData) {
+                    showError('Could not retrieve weather data');
+                    document.getElementById('loadingIndicator').style.display = 'none';
+                    return;
+                }
+                
+                // Step 3: Display the weather forecast
+                displayWeatherForecast(weatherData, destination, country, startDate, endDate);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showError('An error occurred while fetching weather data');
+            } finally {
+                document.getElementById('loadingIndicator').style.display = 'none';
+            }
+        }
+
+        // Function to get coordinates (latitude and longitude) for a location
+        async function getCoordinates(city, country) {
+            try {
+                const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`);
+                const data = await response.json();
+                
+                if (!data.results || data.results.length === 0) {
+                    return null;
+                }
+                
+                // Filter by country if provided
+                let result = data.results[0];
+                if (country) {
+                    const countryMatch = data.results.find(r => 
+                        r.country && r.country.toLowerCase() === country.toLowerCase()
+                    );
+                    if (countryMatch) {
+                        result = countryMatch;
+                    }
+                }
+                
+                return {
+                    latitude: result.latitude,
+                    longitude: result.longitude,
+                    name: result.name,
+                    country: result.country
+                };
+            } catch (error) {
+                console.error('Error getting coordinates:', error);
+                return null;
+            }
+        }
+
+        // Function to get weather forecast data
+        async function getWeatherData(latitude, longitude, startDate, endDate) {
+            try {
+                // Format dates for API
+                const formattedStartDate = startDate;
+                const formattedEndDate = endDate;
+                
+                // Build API URL with all required parameters
+                const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,precipitation_hours,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=auto&start_date=${formattedStartDate}&end_date=${formattedEndDate}`;
+                
+                const response = await fetch(apiUrl);
+                return await response.json();
+            } catch (error) {
+                console.error('Error getting weather data:', error);
+                return null;
+            }
+        }
+
+        // Function to display weather forecast
+        function displayWeatherForecast(weatherData, city, country, startDate, endDate) {
+            // Update destination info
+            document.getElementById('locationName').textContent = `${city}, ${country}`;
+            
+            // Format dates for display
+            const formattedStartDate = formatDate(new Date(startDate));
+            const formattedEndDate = formatDate(new Date(endDate));
+            document.getElementById('travelDates').textContent = `Travel Dates: ${formattedStartDate} - ${formattedEndDate}`;
+            
+            // Clear previous forecast cards
+            const forecastCardsContainer = document.getElementById('forecastCards');
+            forecastCardsContainer.innerHTML = '';
+            
+            // Create forecast cards for each day (limit to 5 days for homepage)
+            const days = weatherData.daily.time.slice(0, 5);
+            
+            days.forEach((day, index) => {
+                const weatherCode = weatherData.daily.weathercode[index];
+                const maxTemp = weatherData.daily.temperature_2m_max[index];
+                const minTemp = weatherData.daily.temperature_2m_min[index];
+                const windSpeed = weatherData.daily.windspeed_10m_max[index];
+                const precipitation = weatherData.daily.precipitation_sum[index];
+                
+                // Create forecast card
+                const card = document.createElement('div');
+                card.className = 'forecast-card';
+                
+                // Get weather icon and condition text
+                const { icon, condition } = getWeatherIconAndCondition(weatherCode);
+                
+                card.innerHTML = `
+                    <div class="forecast-date">${formatDate(new Date(day))}</div>
+                    <div class="forecast-icon">${icon}</div>
+                    <div class="forecast-details">
+                        <div class="forecast-temp">${Math.round(maxTemp)}°C / ${Math.round(minTemp)}°C</div>
+                        <div class="forecast-condition">${condition}</div>
+                        <div class="forecast-item">
+                            <span class="forecast-label">Wind</span>
+                            <span class="forecast-value">${windSpeed} km/h</span>
+                        </div>
+                        <div class="forecast-item">
+                            <span class="forecast-label">Precipitation</span>
+                            <span class="forecast-value">${precipitation} mm</span>
+                        </div>
+                    </div>
+                `;
+                
+                forecastCardsContainer.appendChild(card);
+            });
+            
+            // Show results
+            document.getElementById('weatherResults').style.display = 'block';
+        }
+
+        // Function to get weather icon and condition based on WMO weather code
+        function getWeatherIconAndCondition(code) {
+            // WMO Weather interpretation codes (https://open-meteo.com/en/docs)
+            switch (true) {
+                case code === 0:
+                    return { icon: '☀️', condition: 'Clear sky' };
+                case code === 1:
+                    return { icon: '🌤️', condition: 'Mainly clear' };
+                case code === 2:
+                    return { icon: '⛅', condition: 'Partly cloudy' };
+                case code === 3:
+                    return { icon: '☁️', condition: 'Overcast' };
+                case code === 45 || code === 48:
+                    return { icon: '🌫️', condition: 'Fog' };
+                case code >= 51 && code <= 55:
+                    return { icon: '🌦️', condition: 'Drizzle' };
+                case code >= 56 && code <= 57:
+                    return { icon: '🌧️', condition: 'Freezing Drizzle' };
+                case code >= 61 && code <= 65:
+                    return { icon: '🌧️', condition: 'Rain' };
+                case code >= 66 && code <= 67:
+                    return { icon: '🌨️', condition: 'Freezing Rain' };
+                case code >= 71 && code <= 77:
+                    return { icon: '❄️', condition: 'Snow' };
+                case code >= 80 && code <= 82:
+                    return { icon: '🌦️', condition: 'Rain Showers' };
+                case code >= 85 && code <= 86:
+                    return { icon: '🌨️', condition: 'Snow Showers' };
+                case code >= 95 && code <= 99:
+                    return { icon: '⛈️', condition: 'Thunderstorm' };
+                default:
+                    return { icon: '❓', condition: 'Unknown' };
+            }
+        }
+
+        // Helper function to format date
+        function formatDate(date) {
+            const options = { weekday: 'short', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        // Function to show error message
+        function showError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            document.getElementById('errorText').textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navWrapper = document.querySelector('.nav-wrapper');
+            
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navWrapper.classList.toggle('active');
+            });
+            
+            // Dropdown toggle for mobile
+            const dropdowns = document.querySelectorAll('.dropdown');
+            
+            dropdowns.forEach(dropdown => {
+                const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
+                
+                dropdownToggle.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 992) {
+                        e.preventDefault();
+                        dropdown.classList.toggle('active');
+                    }
+                });
+            });
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (navWrapper.classList.contains('active') && 
+                    !navWrapper.contains(e.target) && 
+                    !hamburger.contains(e.target)) {
+                    hamburger.classList.remove('active');
+                    navWrapper.classList.remove('active');
+                }
+            });
+            
+            // Close mobile menu when window is resized above mobile breakpoint
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 992 && navWrapper.classList.contains('active')) {
+                    hamburger.classList.remove('active');
+                    navWrapper.classList.remove('active');
+                    
+                    // Reset any active dropdowns
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

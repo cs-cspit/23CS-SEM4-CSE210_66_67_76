@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magical Bali Tour - 7 Days of Paradise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2a3990;
+            --secondary: #e84545;
+            --accent: #00a8cc;
+            --text: #333;
+            --light: #f5f5f5;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: var(--light);
+        }
+
+        .hero-section {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                        url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1920');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.2em;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tour-overview {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .overview-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .overview-card i {
+            font-size: 2.5em;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .itinerary-section {
+            padding: 50px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .day-card {
+            background: white;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .day-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .day-content {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+
+        .timeline {
+            border-left: 2px solid var(--accent);
+            padding-left: 20px;
+        }
+
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: absolute;
+            left: -26px;
+            top: 5px;
+        }
+
+        .day-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .book-now-btn {
+            background: var(--secondary);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .book-now-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .day-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Magical Bali Tour</h1>
+            <p>Experience 7 days of paradise in the Island of Gods. From pristine beaches to ancient temples, 
+               immerse yourself in Bali's rich culture and natural beauty.</p>
+        </div>
+    </div>
+
+    <div class="tour-overview">
+        <h2 data-aos="fade-up">Tour Highlights</h2>
+        <div class="overview-grid">
+            <div class="overview-card" data-aos="fade-up">
+                <i class="fas fa-hotel"></i>
+                <h3>Luxury Accommodation</h3>
+                <p>5-star resorts with traditional Balinese charm</p>
+            </div>
+            <div class="overview-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-utensils"></i>
+                <h3>Culinary Experience</h3>
+                <p>Traditional and modern Balinese cuisine</p>
+            </div>
+            <div class="overview-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-pray"></i>
+                <h3>Cultural Immersion</h3>
+                <p>Temple visits and traditional ceremonies</p>
+            </div>
+            <div class="overview-card" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-swimming-pool"></i>
+                <h3>Beach Activities</h3>
+                <p>Surfing, snorkeling, and beach relaxation</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="itinerary-section">
+        <h2 style="text-align: center; margin-bottom: 40px;" data-aos="fade-up">Your 7-Day Adventure</h2>
+        
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 1: Welcome to Paradise</h3>
+                <span>Seminyak</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800" 
+                     alt="Seminyak Beach" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Airport Arrival</h4>
+                        <p>Private transfer to your luxury resort in Seminyak</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Welcome Ceremony</h4>
+                        <p>Traditional Balinese welcome and spa treatment</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Sunset Dinner</h4>
+                        <p>Beachfront welcome dinner at La Lucciola</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 2: Cultural Ubud</h3>
+                <span>Ubud</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=800" 
+                     alt="Ubud Rice Terraces" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Rice Terrace Walk</h4>
+                        <p>Guided tour of the UNESCO Tegalalang Rice Terraces</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Monkey Forest</h4>
+                        <p>Visit the sacred Monkey Forest Sanctuary</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Traditional Dance</h4>
+                        <p>Legong dance performance and dinner</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 3: Temple Journey</h3>
+                <span>Uluwatu</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1584363104430-7b0c5c88b5a4?auto=format&fit=crop&w=800" 
+                     alt="Uluwatu Temple" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Temple Tour</h4>
+                        <p>Visit to Tanah Lot and Uluwatu temples</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Cliff Views</h4>
+                        <p>Scenic cliff walk and photo opportunities</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Fire Dance</h4>
+                        <p>Traditional Kecak fire dance at sunset</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add after Day 3 -->
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 4: Island Paradise</h3>
+                <span>Nusa Penida</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1573790387438-4da905039392?auto=format&fit=crop&w=800" 
+                     alt="Nusa Penida Beach" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Island Hopping</h4>
+                        <p>Speed boat to Nusa Penida island</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Beach Exploration</h4>
+                        <p>Visit to Kelingking Beach and Angel's Billabong</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Sunset Views</h4>
+                        <p>Dinner at Crystal Bay with sunset views</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 5: Mountain Adventure</h3>
+                <span>Mount Batur</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?auto=format&fit=crop&w=800" 
+                     alt="Mount Batur Sunrise" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Early Morning: Sunrise Trek</h4>
+                        <p>Mount Batur sunrise trekking experience</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Hot Springs</h4>
+                        <p>Relax in natural hot springs with mountain views</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Coffee Plantation</h4>
+                        <p>Visit to traditional coffee plantation and tasting</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 6: Water Temple & Spa</h3>
+                <span>Tirta Empul</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1604841940435-b761ce35c4a3?auto=format&fit=crop&w=800" 
+                     alt="Tirta Empul Water Temple" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Water Temple</h4>
+                        <p>Purification ceremony at Tirta Empul temple</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Spa Treatment</h4>
+                        <p>Traditional Balinese massage and spa experience</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Farewell Dinner</h4>
+                        <p>Traditional Balinese feast with dance performance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 7: Departure Day</h3>
+                <span>Departure</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1542897644-e04428948020?auto=format&fit=crop&w=800" 
+                     alt="Bali Beach Sunset" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Free Time</h4>
+                        <p>Last-minute shopping or beach relaxation</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Departure</h4>
+                        <p>Private transfer to Denpasar International Airport</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Tour Ends</h4>
+                        <p>Departure with unforgettable memories of Bali</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="book-now-btn" data-aos="fade-up">Book This Tour</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Book Now button functionality
+        document.querySelector('.book-now-btn').addEventListener('click', function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please login to book this tour');
+                window.location.href = '/login';
+                return;
+            }
+            // Add your booking logic here
+            alert('Thank you for your interest! Our team will contact you shortly to complete your booking.');
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - TravelEase</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Profile page styles */
+        .profile-container {
+            max-width: 900px;
+            margin: 80px auto 40px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background-color: #2a3990;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: white;
+            font-size: 2.5rem;
+        }
+        
+        .profile-title h1 {
+            color: #2a3990;
+            margin-bottom: 5px;
+        }
+        
+        .profile-title p {
+            color: #666;
+        }
+        
+        .profile-section {
+            margin-bottom: 30px;
+        }
+        
+        .profile-section h2 {
+            color: #2a3990;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .profile-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .profile-info-item {
+            margin-bottom: 15px;
+        }
+        
+        .profile-info-label {
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        
+        .profile-info-value {
+            color: #333;
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .profile-btn {
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .primary-btn {
+            background-color: #2a3990;
+            color: white;
+            border: none;
+        }
+        
+        .primary-btn:hover {
+            background-color: #1a2770;
+        }
+        
+        .secondary-btn {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .secondary-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .recent-bookings {
+            margin-top: 20px;
+        }
+        
+        .booking-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #2a3990;
+        }
+        
+        .booking-card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .booking-destination {
+            font-weight: 500;
+            color: #2a3990;
+        }
+        
+        .booking-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .booking-details {
+            display: flex;
+            justify-content: space-between;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        
+        .no-bookings {
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-avatar {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include your navigation here -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="homepage.html">TravelEase</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="destinations.html">Destinations</a></li>
+                <li><a href="tours.html">Tours</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="weather-forecast.html">Weather</a></li>
+                
+                <!-- User account dropdown menu -->
+                <li class="user-dropdown" id="userDropdown">
+                    <a href="#" class="user-dropdown-toggle">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="userDisplayName">User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="user-dropdown-menu">
+                        <li><a href="profile.html" class="active"><i class="fas fa-id-card"></i> My Profile</a></li>
+                        <li><a href="my-bookings.html"><i class="fas fa-suitcase"></i> My Bookings</a></li>
+                        <li><a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar" id="profileAvatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-title">
+                <h1 id="profileName">John Doe</h1>
+                <p id="profileEmail">john.doe@example.com</p>
+                <p><span id="membershipStatus">Premium</span> Member</p>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <h2>Personal Information</h2>
+            <div class="profile-info">
+                <div class="profile-info-item">
+                    <div class="profile-info-label">Full Name</div>
+                    <div class="profile-info-value" id="fullName">John Doe</div>
+                </div>
+                <div class="profile-info-item">
+                    <div class="profile-info-label">Email</div>
+                    <div class="profile-info-value" id="email">john.doe@example.com</div>
+                </div>
+                <div class="profile-info-item">
+                    <div class="profile-info-label">Phone</div>
+                    <div class="profile-info-value" id="phone">+1 (555) 123-4567</div>
+                </div>
+                <div class="profile-info-item">
+                    <div class="profile-info-label">Location</div>
+                    <div class="profile-info-value" id="location">New York, USA</div>
+                </div>
+                <div class="profile-info-item">
+                    <div class="profile-info-label">Member Since</div>
+                    <div class="profile-info-value" id="memberSince">January 15, 2023</div>
+                </div>
+                <div class="profile-info-item">
+                    <div class="profile-info-label">Membership</div>
+                    <div class="profile-info-value" id="membership">Premium</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <h2>Recent Bookings</h2>
+            <div class="recent-bookings" id="recentBookings">
+                <!-- Bookings will be loaded here -->
+                <div class="no-bookings" id="noBookings">
+                    <p>You don't have any recent bookings.</p>
+                    <p>Explore our <a href="destinations.html">destinations</a> to plan your next adventure!</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-actions">
+            <button class="profile-btn primary-btn" id="editProfileBtn">Edit Profile</button>
+            <button class="profile-btn secondary-btn" id="changePasswordBtn">Change Password</button>
+        </div>
+    </div>
+
+    <script>
+        // Define your API base URL - adjust this to match your backend
+        const API_BASE_URL = 'http://localhost:5502'; // Change this to your actual backend URL and port
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            checkLoginStatus();
+            
+            // Load user profile data
+            loadUserProfile();
+            
+            // Load recent bookings
+            loadRecentBookings();
+            
+            // Logout button event listener
+            document.getElementById('logoutButton').addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
+            });
+            
+            // Edit profile button
+            document.getElementById('editProfileBtn').addEventListener('click', function() {
+                alert('Edit profile functionality will be implemented here.');
+            });
+            
+            // Change password button
+            document.getElementById('changePasswordBtn').addEventListener('click', function() {
+                alert('Change password functionality will be implemented here.');
+            });
+            
+            // Mobile menu toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+            }
+        });
+        
+        // Function to check login status
+        function checkLoginStatus() {
+            // Get user data from localStorage
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            
+            if (!userData || !userData.isLoggedIn) {
+                // Redirect to login page if not logged in
+                window.location.href = '/frontend/login.html';
+            } else {
+                // Set user display name in nav
+                document.getElementById('userDisplayName').textContent = userData.name || 'User';
+                
+                // Verify token with backend (optional but recommended)
+                verifyToken(userData.token);
+            }
+        }
+        
+        // Function to verify token with backend
+        function verifyToken(token) {
+            if (!token) return;
+            
+            fetch(`${API_BASE_URL}/api/users/verify-token`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                credentials: 'include'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    // Token invalid, log user out
+                    logout();
+                    throw new Error('Invalid token');
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error('Token verification error:', error);
+            });
+        }
+        
+        // Function to load user profile
+        function loadUserProfile() {
+            // Get user data from localStorage
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            
+            if (!userData) return;
+            
+            // Set basic profile data from localStorage
+            document.getElementById('profileName').textContent = userData.name || 'User';
+            document.getElementById('profileEmail').textContent = userData.email || 'user@example.com';
+            
+            // Set profile avatar initials
+            if (userData.name) {
+                const initials = userData.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.getElementById('profileAvatar').innerHTML = initials;
+            }
+            
+            // Fetch complete profile data from backend
+            fetch(`${API_BASE_URL}/api/users/profile`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${userData.token}`
+                },
+                credentials: 'include'
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to fetch profile');
+                return response.json();
+            })
+            .then(data => {
+                // Update profile with complete data
+                document.getElementById('fullName').textContent = data.name || userData.name || 'User';
+                document.getElementById('email').textContent = data.email || userData.email || 'user@example.com';
+                document.getElementById('phone').textContent = data.phone || 'Not provided';
+                document.getElementById('location').textContent = data.location || 'Not provided';
+                
+                // Format member since date
+                const memberSince = data.createdAt ? new Date(data.createdAt) : new Date();
+                document.getElementById('memberSince').textContent = memberSince.toLocaleDateString('en-US', { 
+                    month: 'long', day: 'numeric', year: 'numeric' 
+                });
+                
+                // Set membership status
+                const membershipStatus = data.membership?.type || 'Standard';
+                document.getElementById('membershipStatus').textContent = membershipStatus;
+                document.getElementById('membership').textContent = membershipStatus;
+                
+                // Add membership badge if premium or silver
+                if (membershipStatus.toLowerCase() !== 'standard') {
+                    const membershipBadge = document.createElement('div');
+                    membershipBadge.className = 'membership-badge ' + membershipStatus.toLowerCase();
+                    membershipBadge.textContent = membershipStatus;
+                    
+                    // Add badge to profile header
+                    const profileTitle = document.querySelector('.profile-title');
+                    if (profileTitle && !document.querySelector('.membership-badge')) {
+                        profileTitle.appendChild(membershipBadge);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching profile:', error);
+            });
+        }
+        
+        // Function to load recent bookings
+        function loadRecentBookings() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            if (!userData || !userData.token) return;
+            
+            const bookingsContainer = document.getElementById('recentBookings');
+            const noBookingsMessage = document.getElementById('noBookings');
+            
+            // Show loading state
+            bookingsContainer.innerHTML = '<div class="loading-spinner">Loading your bookings...</div>';
+            
+            // Fetch bookings from backend
+            fetch(`${API_BASE_URL}/api/bookings/user`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${userData.token}`
+                },
+                credentials: 'include'
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to fetch bookings');
+                return response.json();
+            })
+            .then(bookings => {
+                // Clear loading state
+                bookingsContainer.innerHTML = '';
+                
+                if (bookings && bookings.length > 0) {
+                    // Hide no bookings message
+                    noBookingsMessage.style.display = 'none';
+                    
+                    // Display bookings
+                    bookings.forEach(booking => {
+                        const bookingCard = document.createElement('div');
+                        bookingCard.className = 'booking-card';
+                        
+                        // Format dates
+                        const startDate = new Date(booking.startDate);
+                        const endDate = new Date(booking.endDate);
+                        const formattedStartDate = startDate.toLocaleDateString('en-US', { 
+                            month: 'short', day: 'numeric', year: 'numeric' 
+                        });
+                        const formattedEndDate = endDate.toLocaleDateString('en-US', { 
+                            month: 'short', day: 'numeric', year: 'numeric' 
+                        });
+                        
+                        bookingCard.innerHTML = `
+                            <div class="booking-card-header">
+                                <div class="booking-destination">${booking.destination}, ${booking.country}</div>
+                                <div class="booking-reference">Ref: ${booking.reference || booking._id}</div>
+                            </div>
+                            <div class="booking-date">
+                                ${formattedStartDate} - ${formattedEndDate}
+                            </div>
+                            <div class="booking-details">
+                                <div>${booking.travelers} Traveler(s)</div>
+                                <div>${booking.packageType} Package</div>
+                                <div>$${booking.amount.toFixed(2)}</div>
+                            </div>
+                        `;
+                        
+                        bookingsContainer.appendChild(bookingCard);
+                    });
+                } else {
+                    // Show no bookings message
+                    noBookingsMessage.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching bookings:', error);
+                bookingsContainer.innerHTML = '<div class="error-message">Failed to load bookings. Please try again later.</div>';
+            });
+        }
+        
+        // Function to handle logout
+        function logout() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            
+            // Call logout API if token exists
+            if (userData && userData.token) {
+                fetch(`${API_BASE_URL}/api/users/logout`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${userData.token}`
+                    },
+                    credentials: 'include'
+                }).catch(error => {
+                    console.error('Logout API error:', error);
+                });
+            }
+            
+            // Clear user data from localStorage
+            localStorage.removeItem('userData');
+            
+            // Redirect to homepage
+            window.location.href = '/frontend/homepage.html';
+        }
+    </script>
+</body>
+</html> 

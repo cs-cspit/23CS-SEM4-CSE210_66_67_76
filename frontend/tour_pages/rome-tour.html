@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eternal Rome Tour - 6 Days in the Ancient Capital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2a3990;
+            --secondary: #e84545;
+            --accent: #d4af37;
+            --text: #333;
+            --light: #f5f5f5;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: var(--light);
+        }
+
+        .hero-section {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                        url('https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1920');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.2em;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tour-overview {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .overview-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .overview-card i {
+            font-size: 2.5em;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .itinerary-section {
+            padding: 50px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .day-card {
+            background: white;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .day-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .day-content {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+
+        .timeline {
+            border-left: 2px solid var(--accent);
+            padding-left: 20px;
+        }
+
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: absolute;
+            left: -26px;
+            top: 5px;
+        }
+
+        .day-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .book-now-btn {
+            background: var(--secondary);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .book-now-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .day-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Eternal Rome Tour</h1>
+            <p>Experience 6 magical days in the Eternal City. From ancient ruins to Renaissance masterpieces, immerse yourself in the heart of Italian history and culture.</p>
+        </div>
+    </div>
+
+    <div class="tour-overview">
+        <h2 data-aos="fade-up">Tour Highlights</h2>
+        <div class="overview-grid">
+            <div class="overview-card" data-aos="fade-up">
+                <i class="fas fa-hotel"></i>
+                <h3>Luxury Stay</h3>
+                <p>4-star hotel in central Rome</p>
+            </div>
+            <div class="overview-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-utensils"></i>
+                <h3>Italian Cuisine</h3>
+                <p>Authentic Roman dining experiences</p>
+            </div>
+            <div class="overview-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-landmark"></i>
+                <h3>Skip-the-Line</h3>
+                <p>VIP access to major attractions</p>
+            </div>
+            <div class="overview-card" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-paint-brush"></i>
+                <h3>Art & History</h3>
+                <p>Expert guided tours</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="itinerary-section">
+        <h2 style="text-align: center; margin-bottom: 40px;" data-aos="fade-up">Your 6-Day Roman Adventure</h2>
+        
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 1: Welcome to Rome</h3>
+                <span>City Center</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1555992828-ca4dbe41d294?auto=format&fit=crop&w=800" 
+                     alt="Trevi Fountain" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Arrival</h4>
+                        <p>Private transfer to central Rome hotel</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Walking Tour</h4>
+                        <p>Trevi Fountain and Spanish Steps</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Welcome Dinner</h4>
+                        <p>Traditional Roman restaurant in Trastevere</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 2: Ancient Rome</h3>
+                <span>Colosseum & Forum</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1552432552-06c0b0a94dda?auto=format&fit=crop&w=800" 
+                     alt="Colosseum" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Colosseum</h4>
+                        <p>VIP access and guided tour</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Roman Forum</h4>
+                        <p>Ancient Roman history exploration</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Palatine Hill</h4>
+                        <p>Sunset views over ancient Rome</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 3: Vatican City</h3>
+                <span>Art & Religion</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1570005318867-49640de914ad?auto=format&fit=crop&w=800" 
+                     alt="Vatican Museums" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Vatican Museums</h4>
+                        <p>Early access to avoid crowds</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Sistine Chapel</h4>
+                        <p>Michelangelo's masterpiece</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: St. Peter's Basilica</h4>
+                        <p>Guided tour of the world's largest church</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 4: Roman Art</h3>
+                <span>Galleries & Piazzas</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1542820229-081e0c12af0b?auto=format&fit=crop&w=800" 
+                     alt="Borghese Gallery" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Borghese Gallery</h4>
+                        <p>Bernini and Caravaggio masterpieces</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Villa Gardens</h4>
+                        <p>Relaxing walk through Borghese Gardens</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Piazza Navona</h4>
+                        <p>Dinner by Bernini's fountains</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 5: Hidden Rome</h3>
+                <span>Local Experience</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=800" 
+                     alt="Trastevere" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Cooking Class</h4>
+                        <p>Learn to make pasta and tiramisu</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Catacombs</h4>
+                        <p>Underground Rome exploration</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Food Tour</h4>
+                        <p>Trastevere neighborhood tastings</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 6: Farewell Rome</h3>
+                <span>Final Day</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1543429257-3eb0b65d9c58?auto=format&fit=crop&w=800" 
+                     alt="Rome Panorama" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Markets</h4>
+                        <p>Campo de' Fiori market visit</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Free Time</h4>
+                        <p>Shopping or optional activities</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Departure</h4>
+                        <p>Transfer to Rome Airport</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="book-now-btn" data-aos="fade-up">Book This Tour</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        document.querySelector('.book-now-btn').addEventListener('click', function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please login to book this tour');
+                window.location.href = '/login';
+                return;
+            }
+            alert('Thank you for your interest! Our team will contact you shortly to complete your booking.');
+        });
+    </script>
+</body>
+</html> 

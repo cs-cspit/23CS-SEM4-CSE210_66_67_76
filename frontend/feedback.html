@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - TravelEase</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* Navigation styles */
+        .navbar {
+            background-color: #2a3990;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: #e84545;
+        }
+
+        /* Add padding to body to account for fixed navbar */
+        body {
+            padding-top: 70px;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Keep your existing feedback page styles */
+        .feedback-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        :root {
+            --primary: #4a90e2;
+            --secondary: #f64c72;
+            --success: #2ecc71;
+            --warning: #f1c40f;
+            --error: #e74c3c;
+            --dark: #2c3e50;
+            --light: #f5f6fa;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #4a90e2, #67b26f);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .feedback-container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .feedback-header {
+            background: var(--gradient);
+            padding: 2rem;
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feedback-header h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feedback-header p {
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feedback-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255,255,255,0.1) 0,
+                rgba(255,255,255,0.1) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            animation: movePattern 20s linear infinite;
+        }
+
+        .feedback-form {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--light);
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+            outline: none;
+        }
+
+        .rating-group {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .rating-item {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rating-icon {
+            font-size: 2rem;
+            color: #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .rating-item:hover .rating-icon,
+        .rating-item.active .rating-icon {
+            color: var(--warning);
+            transform: scale(1.2);
+        }
+
+        .emotion-selector {
+            display: flex;
+            justify-content: space-around;
+            margin: 1rem 0;
+        }
+
+        .emotion {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .emotion:hover {
+            background: var(--light);
+            transform: translateY(-5px);
+        }
+
+        .emotion.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .emotion i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .submit-btn:active::after {
+            width: 300px;
+            height: 300px;
+            opacity: 0;
+        }
+
+        .success-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--success);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: var(--white);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .success-message.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes movePattern {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 100px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .emotion-selector {
+                flex-wrap: wrap;
+            }
+
+            .emotion {
+                width: calc(33.33% - 1rem);
+                margin: 0.5rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: relative;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--white);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="homepage.html">TravelEase</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="destination_page.html">Destinations</a></li>
+                <li><a href="tours_page.html">Tours</a></li>
+                <li><a href="about_page.html">About</a></li>
+                <li><a href="contact_page.html">Contact</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="membership.html">Membership</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="feedback-container">
+        <!-- Feedback Header -->
+        <div class="feedback-header">
+            <h2>Share Your Feedback</h2>
+            <p>Help us improve your experience</p>
+        </div>
+
+        <!-- Feedback Form -->
+        <form class="feedback-form" id="feedbackForm">
+            <!-- Rating Section -->
+            <div class="form-group">
+                <label class="form-label">How would you rate your experience?</label>
+                <div class="rating-group">
+                    <div class="rating-item" data-rating="1">
+                        <i class="fas fa-star rating-icon"></i>
+                        <p>Poor</p>
+                    </div>
+                    <div class="rating-item" data-rating="2">
+                        <i class="fas fa-star rating-icon"></i>
+                        <p>Fair</p>
+                    </div>
+                    <div class="rating-item" data-rating="3">
+                        <i class="fas fa-star rating-icon"></i>
+                        <p>Good</p>
+                    </div>
+                    <div class="rating-item" data-rating="4">
+                        <i class="fas fa-star rating-icon"></i>
+                        <p>Very Good</p>
+                    </div>
+                    <div class="rating-item" data-rating="5">
+                        <i class="fas fa-star rating-icon"></i>
+                        <p>Excellent</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emotion Section -->
+            <div class="form-group">
+                <label class="form-label">How did we make you feel?</label>
+                <div class="emotion-selector">
+                    <div class="emotion" data-emotion="happy">
+                        <i class="far fa-smile"></i>
+                        <p>Happy</p>
+                    </div>
+                    <div class="emotion" data-emotion="neutral">
+                        <i class="far fa-meh"></i>
+                        <p>Neutral</p>
+                    </div>
+                    <div class="emotion" data-emotion="sad">
+                        <i class="far fa-frown"></i>
+                        <p>Sad</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Fields -->
+            <div class="form-group">
+                <label class="form-label">What did you like most?</label>
+                <input type="text" class="form-input" placeholder="E.g., Customer service, product quality...">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">What could we improve?</label>
+                <textarea class="form-input" rows="4" placeholder="Share your suggestions..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Your Email (optional)</label>
+                <input type="email" class="form-input" placeholder="Enter your email address">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn" id="submitBtn">
+                Submit Feedback
+            </button>
+        </form>
+
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle success-icon"></i>
+            <h3>Thank You!</h3>
+            <p>Your feedback has been submitted successfully</p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Rating Selection
+        const ratingItems = document.querySelectorAll('.rating-item');
+        let selectedRating = 0;
+
+        ratingItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const rating = parseInt(item.dataset.rating);
+                selectedRating = rating;
+
+                // Remove active class from all items
+                ratingItems.forEach(ri => {
+                    ri.classList.remove('active');
+                    ri.querySelector('.rating-icon').style.color = '#ddd';
+                });
+
+                // Add active class to selected and previous items
+                for(let i = 0; i < rating; i++) {
+                    ratingItems[i].classList.add('active');
+                    ratingItems[i].querySelector('.rating-icon').style.color = '#f1c40f';
+                }
+            });
+
+            // Hover effects
+            item.addEventListener('mouseover', () => {
+                const rating = parseInt(item.dataset.rating);
+                for(let i = 0; i < rating; i++) {
+                    ratingItems[i].querySelector('.rating-icon').style.color = '#f1c40f';
+                }
+            });
+
+            item.addEventListener('mouseout', () => {
+                ratingItems.forEach((ri, index) => {
+                    ri.querySelector('.rating-icon').style.color = 
+                        index < selectedRating ? '#f1c40f' : '#ddd';
+                });
+            });
+        });
+
+        // Emotion Selection
+        const emotions = document.querySelectorAll('.emotion');
+        emotions.forEach(emotion => {
+            emotion.addEventListener('click', () => {
+                emotions.forEach(e => e.classList.remove('active'));
+                emotion.classList.add('active');
+            });
+        });
+
+        // Form Submission
+        const form = document.getElementById('feedbackForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Add loading state
+            submitBtn.innerHTML = '<span class="loading"></span>';
+            submitBtn.disabled = true;
+
+            // Simulate form submission
+            setTimeout(() => {
+                successMessage.classList.add('active');
+                
+                // Reset form after success
+                setTimeout(() => {
+                    form.reset();
+                    selectedRating = 0;
+                    ratingItems.forEach(ri => {
+                        ri.classList.remove('active');
+                        ri.querySelector('.rating-icon').style.color = '#ddd';
+                    });
+                    emotions.forEach(e => e.classList.remove('active'));
+                    successMessage.classList.remove('active');
+                    submitBtn.innerHTML = 'Submit Feedback';
+                    submitBtn.disabled = false;
+                }, 3000);
+            }, 1500);
+        });
+
+        // Input Animation
+        const inputs = document.querySelectorAll('.form-input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('.form-label').style.color = '#4a90e2';
+            });
+
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('.form-label').style.color = '#2c3e50';
+            });
+        });
+
+        // Ripple Effect on Submit Button
+        submitBtn.addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const ripple = document.createElement('span');
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            ripple.classList.add('ripple');
+
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        });
+    </script>
+</body>
+</html>

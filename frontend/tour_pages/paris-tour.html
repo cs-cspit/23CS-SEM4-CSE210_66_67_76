@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enchanting Paris Tour - 6 Days in the City of Light</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2a3990;
+            --secondary: #e84545;
+            --accent: #d4af37;
+            --text: #333;
+            --light: #f5f5f5;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: var(--light);
+        }
+
+        .hero-section {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                        url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1920');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.2em;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tour-overview {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .overview-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .overview-card i {
+            font-size: 2.5em;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .itinerary-section {
+            padding: 50px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .day-card {
+            background: white;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .day-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .day-content {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+
+        .timeline {
+            border-left: 2px solid var(--accent);
+            padding-left: 20px;
+        }
+
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: absolute;
+            left: -26px;
+            top: 5px;
+        }
+
+        .day-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .book-now-btn {
+            background: var(--secondary);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .book-now-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .day-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Enchanting Paris Tour</h1>
+            <p>Experience 6 magical days in the City of Light. From iconic landmarks to hidden gems, 
+               immerse yourself in the romance and culture of Paris.</p>
+        </div>
+    </div>
+
+    <div class="tour-overview">
+        <h2 data-aos="fade-up">Tour Highlights</h2>
+        <div class="overview-grid">
+            <div class="overview-card" data-aos="fade-up">
+                <i class="fas fa-hotel"></i>
+                <h3>Luxury Accommodation</h3>
+                <p>4-star hotels in central Paris locations</p>
+            </div>
+            <div class="overview-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-utensils"></i>
+                <h3>Gourmet Experience</h3>
+                <p>Fine dining and culinary workshops</p>
+            </div>
+            <div class="overview-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-landmark"></i>
+                <h3>Cultural Immersion</h3>
+                <p>Skip-the-line access to major attractions</p>
+            </div>
+            <div class="overview-card" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-glass-cheers"></i>
+                <h3>Evening Entertainment</h3>
+                <p>Seine dinner cruise and cabaret shows</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="itinerary-section">
+        <h2 style="text-align: center; margin-bottom: 40px;" data-aos="fade-up">Your 6-Day Paris Adventure</h2>
+        
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 1: Bienvenue à Paris</h3>
+                <span>Central Paris</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1431274172761-fca41d930114?auto=format&fit=crop&w=800" 
+                     alt="Eiffel Tower" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Arrival</h4>
+                        <p>Private transfer to your hotel in central Paris</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: City Overview</h4>
+                        <p>Guided walking tour of the neighborhood</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Welcome Dinner</h4>
+                        <p>Dinner at 58 Tour Eiffel with city views</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 2: Royal Heritage</h3>
+                <span>Versailles</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=800" 
+                     alt="Palace of Versailles" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Versailles Palace</h4>
+                        <p>Skip-the-line tour of the Palace and Hall of Mirrors</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Gardens</h4>
+                        <p>Explore the magnificent gardens and fountains</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Latin Quarter</h4>
+                        <p>Dinner in the historic Latin Quarter</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" data-aos="fade-up">
+            <div class="day-header">
+                <h3>Day 3: Art & Culture</h3>
+                <span>Museum District</span>
+            </div>
+            <div class="day-content">
+                <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=800" 
+                     alt="Louvre Museum" class="day-image">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Morning: Louvre Museum</h4>
+                        <p>Guided tour including the Mona Lisa</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Afternoon: Orsay Museum</h4>
+                        <p>Impressionist masterpieces</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Evening: Seine Cruise</h4>
+                        <p>Dinner cruise along the Seine River</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="book-now-btn" data-aos="fade-up">Book This Tour</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        document.querySelector('.book-now-btn').addEventListener('click', function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please login to book this tour');
+                window.location.href = '/login';
+                return;
+            }
+            alert('Thank you for your interest! Our team will contact you shortly to complete your booking.');
+        });
+    </script>
+</body>
+</html> 

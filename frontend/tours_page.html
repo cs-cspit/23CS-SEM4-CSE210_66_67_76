@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Our Tours - TravelVista</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --accent: #E74C3C;
+            --success: #2ECC71;
+            --warning: #F1C40F;
+            --background: #F8F9FA;
+            --white: #FFFFFF;
+            --gray: #6C757D;
+            --dark: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            padding-top: 70px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                        url('https://www.bontravelindia.com/wp-content/uploads/2022/11/Gurudongmar-Lake-Sikkim.jpg') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .hero-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 6rem 8%;
+            background: var(--white);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .category-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .category-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .category-card:hover .category-img img {
+            transform: scale(1.1);
+        }
+
+        .category-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .category-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .category-content p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Featured Tours */
+        .featured-tours {
+            padding: 6rem 8%;
+            background: var(--background);
+        }
+
+        .tour-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tour-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .tour-img {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tour-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .tour-card:hover .tour-img img {
+            transform: scale(1.1);
+        }
+
+        .tour-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.8rem;
+        }
+
+        .tour-content {
+            padding: 1.5rem;
+        }
+
+        .tour-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .tour-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
+
+        .tour-price {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .tour-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 0.8rem 1.5rem;
+            background: var(--secondary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background 0.3s ease;
+            text-align: center;
+        }
+
+        .tour-btn:hover {
+            background: var(--primary);
+        }
+
+        /* Calendar Section */
+        .calendar-section {
+            padding: 6rem 8%;
+            background: var(--white);
+        }
+
+        .calendar-container {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .calendar-nav button {
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .calendar-nav button:hover {
+            background: var(--primary);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            text-align: center;
+        }
+
+        .calendar-day {
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-day:hover {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .calendar-day.active {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            padding: 6rem 8%;
+            background: var(--background);
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .reviewer-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 1rem;
+        }
+
+        .reviewer-info h4 {
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .reviewer-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .review-rating {
+            color: var(--warning);
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            color: var(--gray);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .calendar-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .navbar {
+            background-color: #2a3990;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: #e84545;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Add this navigation section at the top of your existing body content -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="homepage.html">TravelEase</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="destination_page.html">Destinations</a></li>
+                <li><a href="tours_page.html">Tours</a></li>
+                <li><a href="about_page.html">About</a></li>
+                <li><a href="contact_page.html">Contact</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="membership.html">Membership</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Discover Your Perfect Tour</h1>
+            <p>Explore incredible destinations with our expertly crafted tours</p>
+            <a href="#featured-tours" class="hero-btn">Explore Tours</a>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <div class="section-title">
+            <h2>Tour Categories</h2>
+            <p>Find the perfect tour style for your next adventure</p>
+        </div>
+        <div class="category-grid" id="categoryGrid">
+            <!-- Categories will be loaded dynamically -->
+        </div>
+    </section>
+
+    <!-- Featured Tours Section -->
+    <section class="featured-tours" id="featured-tours">
+        <div class="section-title">
+            <h2>Featured Tours</h2>
+            <p>Our most popular and highly-rated travel experiences</p>
+        </div>
+        <div class="tour-grid" id="tourGrid">
+            <!-- Tours will be loaded dynamically -->
+        </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="calendar-section" id="calendar">
+        <div class="section-title">
+            <h2>Tour Calendar</h2>
+            <p>Find available dates for your dream tour</p>
+        </div>
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <h3 id="currentMonth">March 2024</h3>
+                <div class="calendar-nav">
+                    <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                    <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Calendar will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section" id="reviews">
+        <div class="section-title">
+            <h2>What Our Travelers Say</h2>
+            <p>Real experiences from our valued customers</p>
+        </div>
+        <div class="reviews-grid" id="reviewsGrid">
+            <!-- Reviews will be loaded dynamically -->
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Sample data for categories
+        const categories = [
+            {
+                name: 'Adventure Tours',
+                icon: 'fa-mountain',
+                image: 'https://treksnrapids.com/wp-content/uploads/2018/07/pilgrims-banner.jpg',
+                description: 'Thrilling experiences in nature'
+            },
+            {
+                name: 'Cultural Tours',
+                icon: 'fa-landmark',
+                image: 'https://miro.medium.com/v2/resize:fit:1400/1*kniyaU_TRJIxwG1hXrY4jg.jpeg',
+                description: 'Immerse in local traditions'
+            },
+            {
+                name: 'Luxury Tours',
+                icon: 'fa-gem',
+                image: 'https://kailashvisiontreks.com/storage/92/SKqoeHkfFCxYAgX4EwGoPQ3wFJeEF9-metacGtyMy5qcGc=-.jpg',
+                description: 'Premium travel experiences'
+            },
+            {
+                name: 'Eco Tours',
+                icon: 'fa-leaf',
+                image: 'https://travelovibe.com/uploads/blog/1724350620_pexels-quang-nguyen-vinh-222549-26742995.jpg',
+                description: 'Sustainable travel adventures'
+            }
+        ];
+
+        // Sample data for tours
+        const tours = [
+            {
+                name: 'Paris Explorer',
+                image: 'https://img.static-af.com/transform/45cb9a13-b167-4842-8ea8-05d0cc7a4d04/',
+                duration: '7 Days',
+                price: 1999,
+                rating: 4.8,
+                badge: 'Popular'
+            },
+            {
+                name: 'Tokyo Adventure',
+                image: 'https://i0.wp.com/mytravelation.com/wp-content/uploads/2023/11/Tokyo.jpeg',
+                duration: '10 Days',
+                price: 2499,
+                rating: 4.9,
+                badge: 'New'
+            },
+            {
+                name: 'Bali Paradise',
+                image: 'https://balirescentre.com/wp-content/uploads/2023/04/Cover-Photo.webp',
+                duration: '5 Days',
+                price: 1499,
+                rating: 4.7,
+                badge: 'Best Seller'
+            }
+        ];
+
+        // Sample data for reviews
+        const reviews = [
+            {
+                name: 'Sarah Johnson',
+                image: 'https://images.squarespace-cdn.com/content/v1/5801770229687f4155f4ddec/1609188636455-1U62YRXTZ6D1QB79XLUQ/IMG_0104.jpg',
+                tour: 'Paris Explorer',
+                rating: 5,
+                text: 'An absolutely amazing experience! The tour guide was knowledgeable and friendly. Every detail was perfectly planned.'
+            },
+            {
+                name: 'Michael Chen',
+                image: 'https://images.squarespace-cdn.com/content/v1/6607844787f9f05609b34b22/55232369-0b6b-498d-9700-a8adc4cadeab/Messenger_creation_e295dcb2-404e-4f1f-bb84-6d4f8b5c18aa.jpeg',
+                tour: 'Tokyo Adventure',
+                rating: 5,
+                text: 'Incredible journey through Japan. The cultural experiences were unforgettable. Highly recommend!'
+            },
+            {
+                name: 'Emma Wilson',
+                image: 'https://m.media-amazon.com/images/M/MV5BMTQ3ODE2NTMxMV5BMl5BanBnXkFtZTgwOTIzOTQzMjE@._V1_.jpg',
+                tour: 'Bali Paradise',
+                rating: 4,
+                text: 'Beautiful locations and well-organized tours. The accommodations were fantastic.'
+            }
+        ];
+
+        // Function to load categories
+        function loadCategories() {
+            const categoryGrid = document.getElementById('categoryGrid');
+            categories.forEach(category => {
+                const card = `
+                    <div class="category-card" data-aos="fade-up">
+                        <div class="category-img">
+                            <img src="${category.image}" alt="${category.name}">
+                        </div>
+                        <div class="category-content">
+                            <h3><i class="fas ${category.icon}"></i> ${category.name}</h3>
+                            <p>${category.description}</p>
+                        </div>
+                    </div>
+                `;
+                categoryGrid.innerHTML += card;
+            });
+        }
+
+        // Function to load tours
+        function loadTours() {
+            const tourGrid = document.getElementById('tourGrid');
+            tours.forEach(tour => {
+                const card = `
+                    <div class="tour-card" data-aos="fade-up">
+                        <div class="tour-img">
+                            <img src="${tour.image}" alt="${tour.name}">
+                            ${tour.badge ? `<span class="tour-badge">${tour.badge}</span>` : ''}
+                        </div>
+                        <div class="tour-content">
+                            <h3 class="tour-title">${tour.name}</h3>
+                            <div class="tour-info">
+                                <span><i class="fas fa-clock"></i> ${tour.duration}</span>
+                                <span><i class="fas fa-star"></i> ${tour.rating}</span>
+                            </div>
+                            <div class="tour-price">$${tour.price}</div>
+                            <a href="./hotel_booking.html?tourId=${tour.id}" class="tour-btn">Book Now</a>
+                        </div>
+                    </div>
+                `;
+                tourGrid.innerHTML += card;
+            });
+        }
+
+        // Function to load reviews
+        function loadReviews() {
+            const reviewsGrid = document.getElementById('reviewsGrid');
+            reviews.forEach(review => {
+                const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+                const card = `
+                    <div class="review-card" data-aos="fade-up">
+                        <div class="review-header">
+                            <img src="${review.image}" alt="${review.name}" class="reviewer-img">
+                            <div class="reviewer-info">
+                                <h4>${review.name}</h4>
+                                <p>${review.tour}</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">${stars}</div>
+                        <div class="review-text">${review.text}</div>
+                    </div>
+                `;
+                reviewsGrid.innerHTML += card;
+            });
+        }
+
+        // Calendar functionality
+        let currentDate = new Date();
+
+        function updateCalendar() {
+            const calendarGrid = document.getElementById('calendarGrid');
+            const monthYearText = document.getElementById('currentMonth');
+            
+            const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+            
+            monthYearText.textContent = currentDate.toLocaleString('default', { 
+                month: 'long', 
+                year: 'numeric' 
+            });
+            
+            calendarGrid.innerHTML = '';
+            
+            // Add day headers
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            days.forEach(day => {
+                calendarGrid.innerHTML += `<div class="calendar-day header">${day}</div>`;
+            });
+            
+            // Add empty cells for days before first day of month
+            for (let i = 0; i < firstDay.getDay(); i++) {
+                calendarGrid.innerHTML += `<div class="calendar-day"></div>`;
+            }
+            
+            // Add days of month
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const isActive = Math.random() > 0.7 ? 'active' : ''; // Random active days for demo
+                calendarGrid.innerHTML += `
+                    <div class="calendar-day ${isActive}">${day}</div>
+                `;
+            }
+        }
+
+        // Event listeners for calendar navigation
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            updateCalendar();
+        });
+
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            updateCalendar();
+        });
+
+        // Initialize everything when page loads
+        window.addEventListener('load', () => {
+            loadCategories();
+            loadTours();
+            loadReviews();
+            updateCalendar();
+        });
+    </script>
+</body>
+</html>

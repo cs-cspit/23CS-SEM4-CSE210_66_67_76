@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Plans - TravelEase</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* Navigation styles */
+        .navbar {
+            background-color: #2a3990;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: #e84545;
+        }
+
+        /* Add padding to body to account for fixed navbar */
+        body {
+            padding-top: 70px;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Keep your existing membership page styles */
+        .membership-container {
+            max-width: 1200px;
+            margin: 80px auto 40px;
+            padding: 0 20px;
+        }
+
+        :root {
+            --primary: #2a3990;
+            --secondary: #e84545;
+            --gold: #ffd700;
+            --platinum: #e5e4e2;
+            --diamond: #b9f2ff;
+            --text: #333;
+            --bg-light: #f5f5f5;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-light);
+            color: var(--text);
+        }
+
+        .membership-hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 100px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s;
+        }
+
+        .membership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .membership-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .membership-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-silver { border: 2px solid #c0c0c0; }
+        .card-gold { border: 2px solid var(--gold); }
+        .card-platinum { border: 2px solid var(--platinum); }
+        .card-diamond { border: 2px solid var(--diamond); }
+
+        .membership-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .membership-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .membership-price {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .benefits-list {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .benefits-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .benefits-list i {
+            color: var(--secondary);
+            margin-right: 10px;
+        }
+
+        .learn-more-btn {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .learn-more-btn:hover {
+            background: var(--secondary);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            margin: auto;
+            position: relative;
+            transform: translateY(-50px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .membership-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .hero-title {
+                font-size: 2em;
+            }
+        }
+
+        .purchase-btn {
+            background: var(--secondary);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .purchase-btn:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .price-display {
+            font-weight: bold;
+            color: var(--text);
+        }
+
+        .purchase-section {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            margin-top: 30px;
+        }
+
+        /* Membership plan cards */
+        .membership-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .membership-header h1 {
+            color: #2a3990;
+            margin-bottom: 10px;
+        }
+        
+        .membership-plans {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .plan-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 300px;
+            transition: transform 0.3s ease;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .plan-header {
+            background-color: #2a3990;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .premium .plan-header {
+            background-color: #e84545;
+        }
+        
+        .platinum .plan-header {
+            background: linear-gradient(135deg, #2a3990, #e84545);
+        }
+        
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        
+        .plan-duration {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .plan-features {
+            padding: 20px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-list i {
+            margin-right: 10px;
+        }
+        
+        .fa-check {
+            color: #2a3990;
+        }
+        
+        .fa-times {
+            color: #ccc;
+        }
+        
+        .premium .fa-check {
+            color: #e84545;
+        }
+        
+        .platinum .fa-check {
+            color: #9c27b0;
+        }
+        
+        .buy-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #2a3990;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .premium .buy-btn {
+            background-color: #e84545;
+        }
+        
+        .platinum .buy-btn {
+            background: linear-gradient(135deg, #2a3990, #e84545);
+        }
+        
+        .buy-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="../homepage.html">TravelEase</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="destination_page.html">Destinations</a></li>
+                <li><a href="tours_page.html">Tours</a></li>
+                <li><a href="about_page.html">About</a></li>
+                <li><a href="contact_page.html">Contact</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="membership.html">Membership</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="membership-hero">
+        <h1 class="hero-title">TravelVista Elite Membership</h1>
+        <p class="hero-subtitle">Choose the perfect membership tier for your travel adventures</p>
+    </div>
+
+    <div class="membership-container">
+        <div class="membership-header">
+            <h1>Choose Your Membership Plan</h1>
+            <p>Unlock exclusive benefits and discounts with our membership plans.</p>
+        </div>
+        
+        <div class="membership-plans">
+            <!-- Basic Plan -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-name">Basic</div>
+                    <div class="plan-price">$9.99</div>
+                    <div class="plan-duration">per month</div>
+                </div>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> 5% discount on all tours</li>
+                        <li><i class="fas fa-check"></i> Priority customer support</li>
+                        <li><i class="fas fa-check"></i> Monthly newsletter</li>
+                        <li><i class="fas fa-times"></i> Free airport transfers</li>
+                        <li><i class="fas fa-times"></i> Exclusive travel guides</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyMembership('basic')">Buy Basic Plan</button>
+                </div>
+            </div>
+            
+            <!-- Premium Plan -->
+            <div class="plan-card premium">
+                <div class="plan-header">
+                    <div class="plan-name">Silver</div>
+                    <div class="plan-price">$49.99</div>
+                    <div class="plan-duration">for 6 months</div>
+                </div>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> 10% discount on all tours</li>
+                        <li><i class="fas fa-check"></i> Priority customer support</li>
+                        <li><i class="fas fa-check"></i> Monthly newsletter</li>
+                        <li><i class="fas fa-check"></i> Free airport transfers</li>
+                        <li><i class="fas fa-times"></i> Exclusive travel guides</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyMembership('silver')">Buy Silver Plan</button>
+                </div>
+            </div>
+            
+            <!-- Platinum Plan -->
+            <div class="plan-card platinum">
+                <div class="plan-header">
+                    <div class="plan-name">Gold</div>
+                    <div class="plan-price">$99.99</div>
+                    <div class="plan-duration">for 12 months</div>
+                </div>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> 15% discount on all tours</li>
+                        <li><i class="fas fa-check"></i> Priority customer support</li>
+                        <li><i class="fas fa-check"></i> Monthly newsletter</li>
+                        <li><i class="fas fa-check"></i> Free airport transfers</li>
+                        <li><i class="fas fa-check"></i> Exclusive travel guides</li>
+                    </ul>
+                    <button class="buy-btn" onclick="buyMembership('gold')">Buy Gold Plan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="membershipModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        const membershipDetails = {
+            silver: {
+                title: "Silver Explorer Benefits",
+                price: "$99",
+                benefits: [
+                    "5% discount on all bookings",
+                    "Priority customer support",
+                    "Early access to seasonal deals",
+                    "Free travel insurance",
+                    "Monthly newsletter with exclusive tips",
+                    "Member-only webinars",
+                    "Flexible booking modifications"
+                ],
+                description: "Perfect for occasional travelers looking to enhance their journey with exclusive benefits and savings."
+            },
+            gold: {
+                title: "Gold Voyager Benefits",
+                price: "$199",
+                benefits: [
+                    "10% discount on all bookings",
+                    "Free airport transfers",
+                    "Exclusive member events",
+                    "Quarterly luxury hotel stays",
+                    "Priority check-in at partner hotels",
+                    "24/7 travel assistance",
+                    "Complimentary spa treatments"
+                ],
+                description: "Designed for regular travelers who appreciate luxury and convenience in their journeys."
+            },
+            platinum: {
+                title: "Platinum Elite Benefits",
+                price: "$399",
+                benefits: [
+                    "15% discount on all bookings",
+                    "Guaranteed room upgrades",
+                    "Dedicated travel concierge",
+                    "Access to VIP lounges",
+                    "Helicopter transfers",
+                    "Exclusive dining experiences",
+                    "Personal travel planning"
+                ],
+                description: "For discerning travelers who demand the very best in travel experiences and personal service."
+            },
+            diamond: {
+                title: "Diamond Luxe Benefits",
+                price: "$999",
+                benefits: [
+                    "20% discount on all bookings",
+                    "Private jet access",
+                    "Unlimited concierge service",
+                    "Luxury yacht charters",
+                    "Private island experiences",
+                    "Custom itinerary creation",
+                    "Ultra-luxury accommodations"
+                ],
+                description: "The ultimate in luxury travel, offering unparalleled access to exclusive experiences and services."
+            }
+        };
+
+        function showDetails(tier) {
+            const details = membershipDetails[tier];
+            const modal = document.getElementById('membershipModal');
+            const modalContent = document.getElementById('modalContent');
+
+            modalContent.innerHTML = `
+                <h2 style="color: var(--primary); margin-bottom: 20px;">${details.title}</h2>
+                <p style="margin-bottom: 20px;">${details.description}</p>
+                <h3 style="color: var(--secondary); margin-bottom: 15px;">Detailed Benefits:</h3>
+                <ul style="list-style: none; padding: 0;">
+                    ${details.benefits.map(benefit => `
+                        <li style="margin-bottom: 10px;">
+                            <i class="fas fa-star" style="color: var(--gold); margin-right: 10px;"></i>
+                            ${benefit}
+                        </li>
+                    `).join('')}
+                </ul>
+                <div class="purchase-section" style="margin-top: 30px; text-align: center;">
+                    <p class="price-display" style="font-size: 1.5em; margin-bottom: 15px;">
+                        <span style="color: var(--secondary);">${details.price}</span> per year
+                    </p>
+                    <button onclick="purchaseMembership('${tier}')" class="purchase-btn">
+                        Buy ${tier.charAt(0).toUpperCase() + tier.slice(1)} Membership
+                    </button>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM loaded, setting up membership purchase functionality");
+            
+            // Get all purchase buttons
+            const purchaseButtons = document.querySelectorAll('.purchase-btn');
+            console.log("Found purchase buttons:", purchaseButtons.length);
+            
+            // Add click event listeners to each button
+            purchaseButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const plan = this.getAttribute('data-plan');
+                    console.log("Button clicked for plan:", plan);
+                    
+                    // Check if user is logged in (you can use your actual login check)
+                    const isLoggedIn = localStorage.getItem('token') || true; // For testing
+                    
+                    if (isLoggedIn) {
+                        // Simulate purchase
+                        simulatePurchase(plan);
+                    } else {
+                        alert('Please log in to purchase a membership');
+                        // Redirect to login page if needed
+                        // window.location.href = 'login.html';
+                    }
+                });
+            });
+        });
+        
+        // Function to simulate a membership purchase
+        function simulatePurchase(plan) {
+            console.log("Simulating purchase for plan:", plan);
+            
+            // Create membership data
+            const purchaseDate = new Date();
+            let expiryDate = new Date();
+            
+            // Set expiry based on plan
+            if (plan === 'basic') {
+                expiryDate.setMonth(expiryDate.getMonth() + 1); // 1 month
+            } else if (plan === 'premium') {
+                expiryDate.setMonth(expiryDate.getMonth() + 6); // 6 months
+            } else if (plan === 'platinum') {
+                expiryDate.setMonth(expiryDate.getMonth() + 12); // 12 months
+            }
+            
+            // Store membership data in localStorage
+            const membershipData = {
+                membership: plan,
+                purchaseDate: purchaseDate.toISOString(),
+                expiryDate: expiryDate.toISOString()
+            };
+            
+            localStorage.setItem('membershipData', JSON.stringify(membershipData));
+            console.log("Membership data saved:", membershipData);
+            
+            // Show success message
+            alert(`Thank you for purchasing the ${plan.charAt(0).toUpperCase() + plan.slice(1)} membership!`);
+            
+            // Redirect to profile page
+            window.location.href = 'my-profile.html';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('membershipModal');
+            modal.classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('membershipModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Simple function to handle membership purchase
+        function buyMembership(plan) {
+            console.log("Buying membership plan:", plan);
+            
+            // Create membership data
+            const purchaseDate = new Date();
+            let expiryDate = new Date();
+            
+            // Set expiry based on plan
+            if (plan === 'basic') {
+                expiryDate.setMonth(expiryDate.getMonth() + 1); // 1 month
+            } else if (plan === 'silver') {
+                expiryDate.setMonth(expiryDate.getMonth() + 6); // 6 months
+            } else if (plan === 'gold') {
+                expiryDate.setMonth(expiryDate.getMonth() + 12); // 12 months
+            }
+            
+            // Store membership data in localStorage
+            const membershipData = {
+                membership: plan,
+                purchaseDate: purchaseDate.toISOString(),
+                expiryDate: expiryDate.toISOString()
+            };
+            
+            localStorage.setItem('membershipData', JSON.stringify(membershipData));
+            console.log("Membership data saved:", membershipData);
+            
+            // Show success message
+            alert(`Thank you for purchasing the ${plan.charAt(0).toUpperCase() + plan.slice(1)} membership!`);
+            
+            // Redirect to profile page
+            window.location.href = 'my-profile.html';
+        }
+    </script>
+</body>
+</html>

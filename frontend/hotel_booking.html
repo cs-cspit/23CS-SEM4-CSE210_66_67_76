@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .booking-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .hotel-preview {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .hotel-images {
+            height: 400px;
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-gallery {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid white;
+            transition: transform 0.3s ease;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.1);
+        }
+
+        .hotel-info {
+            padding: 2rem;
+        }
+
+        .hotel-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .hotel-stars {
+            color: #ffd700;
+        }
+
+        .booking-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .room-options {
+            margin: 2rem 0;
+        }
+
+        .room-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .room-card:hover {
+            border-color: #1a2a6c;
+            transform: translateY(-2px);
+        }
+
+        .room-card.selected {
+            border-color: #1a2a6c;
+            background: #f0f4ff;
+        }
+
+        .room-info {
+            flex: 1;
+        }
+
+        .room-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1a2a6c;
+        }
+
+        .payment-options {
+            margin: 2rem 0;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            border-color: #1a2a6c;
+        }
+
+        .payment-method.selected {
+            border-color: #1a2a6c;
+            background: #f0f4ff;
+        }
+
+        .payment-method img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .booking-summary {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .total-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1a2a6c;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #1a2a6c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .book-btn:hover {
+            background: #2a3a7c;
+        }
+
+        @media (max-width: 768px) {
+            .hotel-images {
+                height: 300px;
+            }
+
+            .image-gallery {
+                display: none;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="booking-container">
+        <div class="hotel-preview">
+            <div class="hotel-images">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945" alt="Hotel" class="main-image" id="mainImage">
+                <div class="image-gallery">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945" class="thumbnail" onclick="changeImage(this.src)">
+                    <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd" class="thumbnail" onclick="changeImage(this.src)">
+                    <img src="https://images.unsplash.com/photo-1590490359683-658d3d23f972" class="thumbnail" onclick="changeImage(this.src)">
+                </div>
+            </div>
+            <div class="hotel-info">
+                <div class="hotel-title">
+                    <h1>Luxury Beach Resort & Spa</h1>
+                    <div class="hotel-stars">⭐⭐⭐⭐⭐</div>
+                </div>
+                <p><i class="fas fa-map-marker-alt"></i> Bali, Indonesia</p>
+            </div>
+        </div>
+
+        <div class="booking-form">
+            <h2>Book Your Stay</h2>
+            <form id="bookingForm" onsubmit="return validateForm(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Check-in Date</label>
+                        <input type="date" id="checkIn" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Check-out Date</label>
+                        <input type="date" id="checkOut" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Adults</label>
+                        <select id="adults" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Children</label>
+                        <select id="children">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="room-options">
+                    <h3>Select Room Type</h3>
+                    <div class="room-card" onclick="selectRoom(this, 200)">
+                        <div class="room-info">
+                            <h4>Deluxe Room</h4>
+                            <p>King bed, Ocean view, 40m²</p>
+                        </div>
+                        <div class="room-price">$200/night</div>
+                    </div>
+                    <div class="room-card" onclick="selectRoom(this, 350)">
+                        <div class="room-info">
+                            <h4>Suite</h4>
+                            <p>King bed, Private pool, 60m²</p>
+                        </div>
+                        <div class="room-price">$350/night</div>
+                    </div>
+                    <div class="room-card" onclick="selectRoom(this, 500)">
+                        <div class="room-info">
+                            <h4>Villa</h4>
+                            <p>2 Bedrooms, Private pool, 120m²</p>
+                        </div>
+                        <div class="room-price">$500/night</div>
+                    </div>
+                </div>
+
+                <div class="payment-options">
+                    <h3>Select Payment Method</h3>
+                    <div class="payment-method" onclick="selectPayment(this, 'gpay')">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Google_Pay_Logo.svg/512px-Google_Pay_Logo.svg.png" alt="Google Pay">
+                        <div>
+                            <h4>Google Pay</h4>
+                            <p>Pay securely with Google Pay</p>
+                        </div>
+                    </div>
+                    <div class="payment-method" onclick="selectPayment(this, 'cash')">
+                        <i class="fas fa-money-bill-wave fa-2x"></i>
+                        <div>
+                            <h4>Cash on Arrival</h4>
+                            <p>Pay at hotel during check-in</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="booking-summary">
+                    <h3>Booking Summary</h3>
+                    <div class="summary-row">
+                        <span>Room Charges</span>
+                        <span id="roomCharges">$0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Taxes & Fees (10%)</span>
+                        <span id="taxes">$0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Total Amount</span>
+                        <span id="totalAmount" class="total-price">$0</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="book-btn">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let selectedRoom = null;
+        let selectedPayment = null;
+
+        function changeImage(src) {
+            document.getElementById('mainImage').src = src;
+        }
+
+        function selectRoom(element, price) {
+            // Remove selection from all rooms
+            document.querySelectorAll('.room-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked room
+            element.classList.add('selected');
+            selectedRoom = price;
+            updateSummary();
+        }
+
+        function selectPayment(element, method) {
+            document.querySelectorAll('.payment-method').forEach(pm => {
+                pm.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedPayment = method;
+        }
+
+        function updateSummary() {
+            if (!selectedRoom) return;
+
+            const checkIn = new Date(document.getElementById('checkIn').value);
+            const checkOut = new Date(document.getElementById('checkOut').value);
+            const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+            
+            if (nights > 0) {
+                const roomCharges = selectedRoom * nights;
+                const taxes = roomCharges * 0.1;
+                const total = roomCharges + taxes;
+
+                document.getElementById('roomCharges').textContent = `$${roomCharges}`;
+                document.getElementById('taxes').textContent = `$${taxes}`;
+                document.getElementById('totalAmount').textContent = `$${total}`;
+            }
+        }
+
+        function validateForm(event) {
+            event.preventDefault();
+
+            if (!selectedRoom) {
+                alert('Please select a room');
+                return false;
+            }
+
+            if (!selectedPayment) {
+                alert('Please select a payment method');
+                return false;
+            }
+
+            const checkIn = new Date(document.getElementById('checkIn').value);
+            const checkOut = new Date(document.getElementById('checkOut').value);
+
+            if (checkIn >= checkOut) {
+                alert('Check-out date must be after check-in date');
+                return false;
+            }
+
+            // Simulate booking confirmation
+            alert('Booking confirmed! You will receive a confirmation email shortly.');
+            return true;
+        }
+
+        // Set minimum date for check-in as today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('checkIn').min = today;
+
+        // Update checkout min date when checkin changes
+        document.getElementById('checkIn').addEventListener('change', function() {
+            document.getElementById('checkOut').min = this.value;
+            updateSummary();
+        });
+
+        document.getElementById('checkOut').addEventListener('change', updateSummary);
+    </script>
+</body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation - TravelEase</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/booking-weather.css">
+    <style>
+        /* Booking confirmation styles */
+        .booking-confirmation {
+            max-width: 900px;
+            margin: 80px auto 40px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .booking-confirmation h1 {
+            color: #2a3990;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .confirmation-message {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #e8f5e9;
+            border-radius: 8px;
+        }
+        
+        .confirmation-message i {
+            font-size: 3rem;
+            color: #4caf50;
+            margin-bottom: 15px;
+        }
+        
+        .confirmation-message h2 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        .booking-details {
+            margin-bottom: 30px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .booking-details-header {
+            background-color: #2a3990;
+            color: white;
+            padding: 15px;
+            font-weight: 500;
+        }
+        
+        .booking-details-content {
+            padding: 20px;
+        }
+        
+        .booking-info-row {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        
+        .booking-info-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .booking-info-label {
+            flex: 1;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .booking-info-value {
+            flex: 2;
+            color: #333;
+        }
+        
+        .booking-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .booking-btn {
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .primary-btn {
+            background-color: #2a3990;
+            color: white;
+        }
+        
+        .primary-btn:hover {
+            background-color: #1a2770;
+        }
+        
+        .secondary-btn {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .secondary-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* Weather section styles */
+        .weather-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f5f9ff;
+            border-radius: 8px;
+        }
+        
+        .weather-section h2 {
+            color: #2a3990;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .weather-loading {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .weather-loading i {
+            font-size: 2rem;
+            color: #2a3990;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .weather-cards {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 10px 0;
+        }
+        
+        .weather-card {
+            min-width: 160px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .weather-date {
+            background-color: #2a3990;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .weather-icon {
+            font-size: 2.5rem;
+            text-align: center;
+            padding: 15px 0;
+        }
+        
+        .weather-details {
+            padding: 15px;
+        }
+        
+        .weather-temp {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .weather-condition {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .weather-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .weather-error {
+            text-align: center;
+            padding: 20px;
+            color: #e53935;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="homepage.html">TravelEase</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="destination_page.html">Destinations</a></li>
+                <li><a href="tours_page.html">Tours</a></li>
+                <li><a href="about_page.html">About</a></li>
+                <li><a href="contact_page.html">Contact</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="my-profile.html">My Profile</a></li>
+                <li><a href="weather-forecast.html">Weather</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Booking Confirmation Content -->
+    <div class="booking-confirmation">
+        <h1>Booking Confirmation</h1>
+        
+        <div class="confirmation-message">
+            <i class="fas fa-check-circle"></i>
+            <h2>Your booking is confirmed!</h2>
+            <p>Thank you for booking with TravelEase. Your booking details are below.</p>
+        </div>
+        
+        <div class="booking-details">
+            <div class="booking-details-header">
+                Booking Details
+            </div>
+            <div class="booking-details-content">
+                <div class="booking-info-row">
+                    <div class="booking-info-label">Booking Reference:</div>
+                    <div class="booking-info-value" id="bookingReference">TE-1234567</div>
+                </div>
+                <div class="booking-info-row">
+                    <div class="booking-info-label">Destination:</div>
+                    <div class="booking-info-value" id="bookingDestination">Paris, France</div>
+                </div>
+                <div class="booking-info-row">
+                    <div class="booking-info-label">Travel Dates:</div>
+                    <div class="booking-info-value" id="bookingDates">June 21, 2023 - June 28, 2023</div>
+                </div>
+                <div class="booking-info-row">
+                    <div class="booking-info-label">Travelers:</div>
+                    <div class="booking-info-value" id="bookingTravelers">2 Adults</div>
+                </div>
+                <div class="booking-info-row">
+                    <div class="booking-info-label">Package:</div>
+                    <div class="booking-info-value" id="bookingPackage">Standard Package</div>
+                </div>
+                <div class="booking-info-row">
+                    <div class="booking-info-label">Total Amount:</div>
+                    <div class="booking-info-value" id="bookingAmount">$1,600.00</div>
+                </div>
+                <div class="booking-info-row">
+                    <div class="booking-info-label">Payment Status:</div>
+                    <div class="booking-info-value" id="paymentStatus">Paid</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Weather Forecast Section -->
+        <div class="weather-section">
+            <h2>Weather Forecast for Your Trip</h2>
+            <p class="weather-intro">Here's the weather forecast for your upcoming trip to <span id="weatherDestination">Paris, France</span>:</p>
+            
+            <div class="weather-loading" id="weatherLoading">
+                <i class="fas fa-spinner"></i>
+                <p>Loading weather forecast...</p>
+            </div>
+            
+            <div class="weather-error" id="weatherError">
+                <i class="fas fa-exclamation-circle"></i>
+                <p id="weatherErrorText">Could not load weather forecast.</p>
+            </div>
+            
+            <div class="weather-cards" id="weatherCards">
+                <!-- Weather cards will be dynamically inserted here -->
+            </div>
+        </div>
+        
+        <div class="booking-actions">
+            <a href="homepage.html" class="booking-btn secondary-btn">Return to Home</a>
+            <a href="#" class="booking-btn primary-btn" id="downloadItinerary">Download Itinerary</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get booking details from localStorage
+            const bookingDetailsJSON = localStorage.getItem('bookingDetails');
+            
+            if (!bookingDetailsJSON) {
+                // No booking details found, redirect to homepage
+                alert('No booking details found. Redirecting to homepage.');
+                window.location.href = 'homepage.html';
+                return;
+            }
+            
+            const bookingDetails = JSON.parse(bookingDetailsJSON);
+            
+            // Update booking details in the page
+            document.getElementById('bookingReference').textContent = bookingDetails.reference;
+            document.getElementById('bookingDestination').textContent = `${bookingDetails.destination}, ${bookingDetails.country}`;
+            document.getElementById('weatherDestination').textContent = `${bookingDetails.destination}, ${bookingDetails.country}`;
+            document.getElementById('bookingDates').textContent = `${formatDateLong(bookingDetails.startDate)} - ${formatDateLong(bookingDetails.endDate)}`;
+            document.getElementById('bookingTravelers').textContent = bookingDetails.travelers;
+            document.getElementById('bookingPackage').textContent = bookingDetails.package;
+            document.getElementById('bookingAmount').textContent = bookingDetails.amount;
+            document.getElementById('paymentStatus').textContent = 'Paid';
+            
+            // Fetch weather forecast for the destination
+            fetchWeatherForecast(bookingDetails.destination, bookingDetails.country, bookingDetails.startDate, bookingDetails.endDate);
+        });
+        
+        // Function to fetch weather forecast
+        async function fetchWeatherForecast(city, country, startDate, endDate) {
+            try {
+                // Get coordinates for the destination
+                const coordinates = await getCoordinates(city, country);
+                
+                if (!coordinates) {
+                    showWeatherError('Could not find coordinates for your destination.');
+                    return;
+                }
+                
+                // Get weather data
+                const weatherData = await getWeatherData(coordinates.latitude, coordinates.longitude, startDate, endDate);
+                
+                if (!weatherData) {
+                    showWeatherError('Could not retrieve weather data for your destination.');
+                    return;
+                }
+                
+                // Display weather forecast
+                displayWeatherForecast(weatherData);
+                
+            } catch (error) {
+                console.error('Error fetching weather forecast:', error);
+                showWeatherError('An error occurred while fetching the weather forecast.');
+            }
+        }
+        
+        // Function to get coordinates for a location
+        async function getCoordinates(city, country) {
+            try {
+                const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`);
+                const data = await response.json();
+                
+                if (!data.results || data.results.length === 0) {
+                    return null;
+                }
+                
+                // Filter by country if provided
+                let result = data.results[0];
+                if (country) {
+                    const countryMatch = data.results.find(r => 
+                        r.country && r.country.toLowerCase() === country.toLowerCase()
+                    );
+                    if (countryMatch) {
+                        result = countryMatch;
+                    }
+                }
+                
+                return {
+                    latitude: result.latitude,
+                    longitude: result.longitude
+                };
+            } catch (error) {
+                console.error('Error getting coordinates:', error);
+                return null;
+            }
+        }
+        
+        // Function to get weather data
+        async function getWeatherData(latitude, longitude, startDate, endDate) {
+            try {
+                const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max&timezone=auto&start_date=${startDate}&end_date=${endDate}`;
+                
+                const response = await fetch(apiUrl);
+                return await response.json();
+            } catch (error) {
+                console.error('Error getting weather data:', error);
+                return null;
+            }
+        }
+        
+        // Function to display weather forecast
+        function displayWeatherForecast(weatherData) {
+            // Hide loading indicator
+            document.getElementById('weatherLoading').style.display = 'none';
+            
+            // Get container for weather cards
+            const weatherCardsContainer = document.getElementById('weatherCards');
+            
+            // Create forecast cards for each day (limit to 5 days)
+            const days = weatherData.daily.time.slice(0, 5);
+            
+            days.forEach((day, index) => {
+                const weatherCode = weatherData.daily.weathercode[index];
+                const maxTemp = weatherData.daily.temperature_2m_max[index];
+                const minTemp = weatherData.daily.temperature_2m_min[index];
+                const precipitation = weatherData.daily.precipitation_sum[index];
+                const windSpeed = weatherData.daily.windspeed_10m_max[index];
+                
+                // Get weather icon and condition
+                const { icon, condition } = getWeatherIconAndCondition(weatherCode);
+                
+                // Create card element
+                const card = document.createElement('div');
+                card.className = 'weather-card';
+                card.innerHTML = `
+                    <div class="weather-date">${formatDate(new Date(day))}</div>
+                    <div class="weather-icon">${icon}</div>
+                    <div class="weather-details">
+                        <div class="weather-temp">${Math.round(maxTemp)}°C / ${Math.round(minTemp)}°C</div>
+                        <div class="weather-condition">${condition}</div>
+                        <div class="weather-info">
+                            <span>Wind:</span>
+                            <span>${windSpeed} km/h</span>
+                        </div>
+                        <div class="weather-info">
+                            <span>Rain:</span>
+                            <span>${precipitation} mm</span>
+                        </div>
+                    </div>
+                `;
+                
+                weatherCardsContainer.appendChild(card);
+            });
+        }
+        
+        // Function to show weather error
+        function showWeatherError(message) {
+            document.getElementById('weatherLoading').style.display = 'none';
+            document.getElementById('weatherError').style.display = 'block';
+            document.getElementById('weatherErrorText').textContent = message;
+        }
+        
+        // Function to get weather icon and condition based on WMO weather code
+        function getWeatherIconAndCondition(code) {
+            switch (true) {
+                case code === 0:
+                    return { icon: '☀️', condition: 'Clear sky' };
+                case code === 1:
+                    return { icon: '🌤️', condition: 'Mainly clear' };
+                case code === 2:
+                    return { icon: '⛅', condition: 'Partly cloudy' };
+                case code === 3:
+                    return { icon: '☁️', condition: 'Overcast' };
+                case code >= 45 && code <= 48:
+                    return { icon: '🌫️', condition: 'Fog' };
+                case code >= 51 && code <= 55:
+                    return { icon: '🌦️', condition: 'Drizzle' };
+                case code >= 56 && code <= 57:
+                    return { icon: '🌧️', condition: 'Freezing Drizzle' };
+                case code >= 61 && code <= 65:
+                    return { icon: '🌧️', condition: 'Rain' };
+                case code >= 66 && code <= 67:
+                    return { icon: '🌨️', condition: 'Freezing Rain' };
+                case code >= 71 && code <= 77:
+                    return { icon: '❄️', condition: 'Snow' };
+                case code >= 80 && code <= 82:
+                    return { icon: '🌦️', condition: 'Rain Showers' };
+                case code >= 85 && code <= 86:
+                    return { icon: '🌨️', condition: 'Snow Showers' };
+                case code >= 95 && code <= 99:
+                    return { icon: '⛈️', condition: 'Thunderstorm' };
+                default:
+                    return { icon: '❓', condition: 'Unknown' };
+            }
+        }
+        
+        // Helper function to format date (short format)
+        function formatDate(date) {
+            const options = { weekday: 'short', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+        
+        // Helper function to format date (long format)
+        function formatDateLong(dateString) {
+            const date = new Date(dateString);
+            const options = { month: 'long', day: 'numeric', year: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+        
+        // Download itinerary functionality
+        document.getElementById('downloadItinerary').addEventListener('click', function(event) {
+            event.preventDefault();
+            alert('Your itinerary will be downloaded shortly.');
+            // In a real application, this would generate and download a PDF
+        });
+    </script>
+</body>
+</html> 
